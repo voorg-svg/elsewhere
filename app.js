@@ -10,7 +10,8 @@ const translations = {
     findThought: "Find a thought…", searchNotes: "Search notes", newNote: "New note",
     eyebrow: "A LITTLE ROOM TO THINK", spaceDescription: "Let your thoughts land wherever they want.",
     interfaceLanguage: "INTERFACE", voiceLanguage: "VOICE LANGUAGE",
-    voiceNoteLanguage: "Voice note language", speakThought: "Speak a thought",
+    voiceNoteLanguage: "Voice note language", speakThought: "Record a voice note",
+    stopAndTranscribe: "Stop & transcribe",
     captureVoice: "Capture a voice note", stopVoiceCapture: "Stop voice capture", boardLabel: "Your thought space",
     spaceOpen: "Your space is open.", dropThought: "Drop a thought in.",
     boardCaption: "YOUR THOUGHT SPACE", justYou: "Just you and your thoughts",
@@ -46,7 +47,8 @@ const translations = {
     findThought: "ابحث عن فكرة…", searchNotes: "البحث في الملاحظات", newNote: "ملاحظة جديدة",
     eyebrow: "مساحة صغيرة للتفكير", spaceDescription: "دع أفكارك تستقر حيث تشاء.",
     interfaceLanguage: "لغة الواجهة", voiceLanguage: "لغة التسجيل الصوتي",
-    voiceNoteLanguage: "لغة الملاحظة الصوتية", speakThought: "سجّل فكرة",
+    voiceNoteLanguage: "لغة الملاحظة الصوتية", speakThought: "سجّل ملاحظة صوتية",
+    stopAndTranscribe: "أوقف التسجيل وحوّله إلى نص",
     captureVoice: "تسجيل ملاحظة صوتية", stopVoiceCapture: "إيقاف التسجيل الصوتي", boardLabel: "مساحة أفكارك",
     spaceOpen: "مساحتك جاهزة.", dropThought: "أضف فكرة هنا.",
     boardCaption: "مساحة أفكارك", justYou: "أنت وأفكارك فقط",
@@ -342,6 +344,7 @@ function positionCards() {
 }
 
 function startDrag(event, card, note) {
+  if (window.innerWidth <= 700) return;
   if (event.target.closest("button")) return;
   event.preventDefault();
   const startX = event.clientX;
@@ -498,7 +501,7 @@ function setVoiceButtonState({ recording = false, processing = false } = {}) {
   voiceButton.disabled = processing;
   voiceButton.setAttribute("aria-label", t(recording ? "stopVoiceCapture" : "captureVoice"));
   voiceButton.querySelector("span:nth-child(2)").textContent = recording
-    ? (uiLanguage === "ar" ? "جارٍ الاستماع…" : "Listening…")
+    ? t("stopAndTranscribe")
     : processing ? (uiLanguage === "ar" ? "جارٍ التحويل…" : "Transcribing…") : t("speakThought");
   document.querySelector("#new-note").disabled = busy;
   document.querySelector("#interface-language").disabled = busy;
