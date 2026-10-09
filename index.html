@@ -4,11 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f4f2ed">
-    <meta name="description" content="A calm, voice-friendly space for notes that don't fit in a list.">
+    <meta name="description" content="Elsewhere Notes is a private, offline-first note-taking app with spatial notes, on-device multilingual voice transcription, and text-to-speech.">
+    <meta name="application-name" content="Elsewhere Notes">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Elsewhere Notes">
+    <meta property="og:title" content="Elsewhere Notes — Private Voice Notes, Offline">
+    <meta property="og:description" content="A private thought space for spatial notes, offline voice transcription, and read-aloud notes. Your notes stay on your device.">
+    <meta property="og:url" content="https://voorg-svg.github.io/elsewhere/">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://voorg-svg.github.io/elsewhere/">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./styles.css">
-    <title>Elsewhere — notes with room to think</title>
+    <title>Elsewhere Notes — Private Offline Voice Notes</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Elsewhere Notes",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Web",
+        "url": "https://voorg-svg.github.io/elsewhere/",
+        "description": "A private, offline-first note-taking app with spatial notes, on-device multilingual voice transcription, and text-to-speech."
+      }
+    </script>
   </head>
   <body>
     <div class="app-shell">
@@ -29,6 +48,7 @@
         </div>
       </aside>
 
+
       <main class="main">
         <header class="topbar">
           <div class="breadcrumbs">
@@ -48,6 +68,7 @@
           </div>
         </header>
 
+
         <section class="workspace">
           <div class="space-heading">
             <div>
@@ -61,45 +82,3 @@
                 <span>VOICE LANGUAGE</span>
                 <select id="transcription-language" aria-label="Voice note language"></select>
               </label>
-              <button id="voice-capture" class="voice-button" type="button" aria-label="Capture a voice note">
-                <span class="voice-icon" aria-hidden="true">◖</span>
-                <span>Speak a thought</span>
-                <span class="voice-shortcut">⌘ /</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="board-wrap">
-            <div id="board" class="board" aria-label="Your thought space">
-              <div class="board-hint" id="board-hint">
-                <span class="hint-spark" aria-hidden="true">✳</span>
-                <span>Your space is open.<br><strong>Drop a thought in.</strong></span>
-              </div>
-              <div class="board-caption">YOUR THOUGHT SPACE <span aria-hidden="true">✳</span></div>
-            </div>
-          </div>
-          <footer class="workspace-footer">
-            <span><span class="footer-dot"></span> Just you and your thoughts</span>
-            <span>Drag notes to make connections.</span>
-          </footer>
-        </section>
-      </main>
-    </div>
-
-    <dialog id="space-dialog" class="modal">
-      <form id="space-form" method="dialog">
-        <div class="modal-eyebrow">MAKE A LITTLE ROOM</div>
-        <h2>A new space<span class="title-period">.</span></h2>
-        <label for="space-name">What will you call it?</label>
-        <input id="space-name" name="space-name" maxlength="48" placeholder="e.g. The garden, big ideas…" required>
-        <div class="modal-actions">
-          <button class="button button-quiet" value="cancel" type="submit">Cancel</button>
-          <button class="button button-dark" id="create-space" value="create" type="submit">Create space <span aria-hidden="true">↗</span></button>
-        </div>
-      </form>
-    </dialog>
-
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script type="module" src="./app.js"></script>
-  </body>
-</html>
