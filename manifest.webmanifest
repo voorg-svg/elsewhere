@@ -1,0 +1,17 @@
+{
+  "name": "Elsewhere — notes with room to think",
+  "short_name": "Elsewhere",
+  "description": "A calm, voice-friendly space for notes that don't fit in a list.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f2ed",
+  "theme_color": "#f4f2ed",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

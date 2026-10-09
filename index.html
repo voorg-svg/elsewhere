@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f2ed">
+    <meta name="description" content="A calm, voice-friendly space for notes that don't fit in a list.">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Elsewhere — notes with room to think</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Your spaces">
+        <a class="brand" href="./" aria-label="Elsewhere home">
+          <span class="brand-mark" aria-hidden="true">e.</span>
+          <span>elsewhere</span>
+        </a>
+        <div class="sidebar-label">YOUR SPACES</div>
+        <nav id="space-list" class="space-list" aria-label="Spaces"></nav>
+        <button class="mobile-add-space" id="mobile-add-space" type="button" aria-label="Create a new space">＋</button>
+        <button class="add-space-button" id="add-space" type="button">
+          <span aria-hidden="true">＋</span> New space
+        </button>
+        <div class="sidebar-foot">
+          <span class="privacy-mark" aria-hidden="true">◉</span>
+          <span>Your notes stay on this device.</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="breadcrumbs">
+            <span class="breadcrumb-root">Your spaces</span>
+            <span class="breadcrumb-slash" aria-hidden="true">/</span>
+            <span id="current-space-name">Field notes</span>
+          </div>
+          <div class="top-actions">
+            <label class="search-box">
+              <span aria-hidden="true">⌕</span>
+              <input id="search-input" type="search" placeholder="Find a thought…" autocomplete="off" aria-label="Search notes">
+              <kbd>/</kbd>
+            </label>
+            <button id="new-note" class="button button-dark" type="button">
+              <span aria-hidden="true">＋</span> New note
+            </button>
+          </div>
+        </header>
+
+        <section class="workspace">
+          <div class="space-heading">
+            <div>
+              <div class="eyebrow">A LITTLE ROOM TO THINK</div>
+              <h1 id="space-title">Field notes<span class="title-period">.</span></h1>
+              <p id="space-description">Let your thoughts land wherever they want.</p>
+            </div>
+            <div class="heading-tools">
+              <span class="note-count" id="note-count">0 thoughts</span>
+              <button id="voice-capture" class="voice-button" type="button" aria-label="Capture a voice note">
+                <span class="voice-icon" aria-hidden="true">◖</span>
+                <span>Speak a thought</span>
+                <span class="voice-shortcut">⌘ /</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="board-wrap">
+            <div id="board" class="board" aria-label="Your thought space">
+              <div class="board-hint" id="board-hint">
+                <span class="hint-spark" aria-hidden="true">✳</span>
+                <span>Your space is open.<br><strong>Drop a thought in.</strong></span>
+              </div>
+              <div class="board-caption">YOUR THOUGHT SPACE <span aria-hidden="true">✳</span></div>
+            </div>
+          </div>
+          <footer class="workspace-footer">
+            <span><span class="footer-dot"></span> Just you and your thoughts</span>
+            <span>Drag notes to make connections.</span>
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="space-dialog" class="modal">
+      <form id="space-form" method="dialog">
+        <div class="modal-eyebrow">MAKE A LITTLE ROOM</div>
+        <h2>A new space<span class="title-period">.</span></h2>
+        <label for="space-name">What will you call it?</label>
+        <input id="space-name" name="space-name" maxlength="48" placeholder="e.g. The garden, big ideas…" required>
+        <div class="modal-actions">
+          <button class="button button-quiet" value="cancel" type="submit">Cancel</button>
+          <button class="button button-dark" id="create-space" value="create" type="submit">Create space <span aria-hidden="true">↗</span></button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
