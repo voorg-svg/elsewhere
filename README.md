@@ -1,29 +1,43 @@
 # Elsewhere
 
-Elsewhere is a small, installable web app for capturing thoughts in a space you can arrange. It works on phones and computers, and saves notes in the browser on the current device.
+Elsewhere is an offline-first note app for collecting and arranging thoughts. Notes are stored on the current device; there is no account or cloud sync.
 
-## Try it locally
+## Web app
 
-Open `index.html` in a browser to explore the interface. For install prompts, offline support, or microphone access, serve the folder over `localhost` or HTTPS instead:
+Install Node.js, then run:
 
-```powershell
-python -m http.server 8000
+```sh
+npm install
+npm run dev
 ```
 
-Then open <http://localhost:8000>.
+Vite prints a local URL. For a production build, run `npm run build`; the static app is written to `dist/`.
 
-## Publish with GitHub Pages
+## Offline voice transcription
 
-1. Create a **public** repository on GitHub. Do not add a README or other files during creation.
-2. In VS Code, open the `python` folder that contains this README and the app files.
-3. Use Source Control to initialize a repository, commit the files to a branch named `main`, and publish that branch to the new GitHub repository. Never put passwords or access tokens in the repository.
-4. In the GitHub repository, open **Settings → Pages** and set the build and deployment source to **GitHub Actions**.
-5. Open the **Actions** tab and wait for **Deploy Elsewhere to GitHub Pages** to finish. Its deployment details include the public app address.
+Voice capture records audio locally and transcribes it with the multilingual Whisper Tiny ONNX model through Transformers.js. Choose a language from the voice-language menu; this model supports 99 languages but does not automatically detect which one you are speaking. The model is downloaded the first time transcription is used and kept in the browser model cache for later offline use. Recording audio is not sent to a transcription service. Allow time and storage for the model download before relying on transcription offline.
 
-The workflow in `.github/workflows/deploy-pages.yml` deploys the repository root whenever a commit is pushed to `main`, and can also be started manually from Actions.
+The first-use model download requires an internet connection. Browser/device storage may be cleared by the user or operating system, in which case the model must be downloaded again. Notes remain in local browser storage and are not synced across devices.
 
-## Notes about voice and privacy
+## iOS and Android app shells
 
-- Speech recognition and read-aloud support depend on the browser and device. When browser speech recognition is used, the browser may send audio to its speech service. Elsewhere does not run its own transcription server.
-- Notes and spaces are stored in browser local storage on this device. There is no account, cloud backup, or cross-device sync.
-- Since notes are device-local, publishing the app does not publish users' notes.
+The app is configured for Capacitor. Build the web app, then add platform projects on a machine with the relevant native tools:
+
+```sh
+npm run build
+npx cap add android
+npx cap add ios
+npx cap sync
+```
+
+Android builds require Android Studio and the Android SDK. iOS builds and App Store submissions require macOS, Xcode, an Apple Developer account, app signing, and App Store Connect access. Google Play submissions require a Play Console developer account, signed Android App Bundle, store listing, and testing. On Windows, the GitHub Actions workflow can build unsigned Android and iOS simulator test apps; those are for device testing, not store submission. The Capacitor shell and store submissions still need to be generated, configured, tested on physical devices, and submitted; this repository is not yet published in either app store.
+
+## GitHub Pages
+
+The workflow in `.github/workflows/deploy-pages.yml` builds the web app and publishes `dist/` when changes are pushed to `main`. The Pages source must be set to **GitHub Actions** in repository settings.
+
+## Privacy and voice
+
+- Microphone access is requested only when voice capture is started. Voice audio is processed on-device by the speech model.
+- The speech model is downloaded from Hugging Face on first use. Only the model files are fetched; recorded audio is not uploaded for transcription.
+- Browser and device capabilities vary. Verify microphone capture, model download, offline transcription, and note persistence on real iOS and Android devices before release.

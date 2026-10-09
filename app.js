@@ -1,6 +1,17 @@
 const STORAGE_KEY = "elsewhere-notes-v1";
+const LANGUAGE_STORAGE_KEY = "elsewhere-voice-language-v1";
 const SPACE_EMOJIS = ["✳", "☼", "❋", "⌂", "☁", "◇"];
 const NOTE_TONES = 6;
+const SPEECH_LANGUAGES = [
+  "en", "zh", "de", "es", "ru", "ko", "fr", "ja", "pt", "tr", "pl", "ca", "nl", "ar", "sv", "it",
+  "id", "hi", "fi", "vi", "he", "uk", "el", "ms", "cs", "ro", "da", "hu", "ta", "no", "th", "ur",
+  "hr", "bg", "lt", "la", "mi", "ml", "cy", "sk", "te", "fa", "lv", "bn", "sr", "az", "sl", "kn",
+  "et", "mk", "br", "eu", "is", "hy", "ne", "mn", "bs", "kk", "sq", "sw", "gl", "mr", "pa", "si",
+  "km", "sn", "yo", "so", "af", "oc", "ka", "be", "tg", "sd", "gu", "am", "yi", "lo", "uz", "fo",
+  "ht", "ps", "tk", "nn", "mt", "sa", "lb", "my", "bo", "tl", "mg", "as", "tt", "haw", "ln", "ha",
+  "ba", "jw", "su",
+];
+const SPEECH_LANGUAGE_LABELS = { bo: "Tibetan", ba: "Bashkir" };
 
 const spaceList = document.querySelector("#space-list");
 const board = document.querySelector("#board");
@@ -10,6 +21,7 @@ const spaceDialog = document.querySelector("#space-dialog");
 const spaceForm = document.querySelector("#space-form");
 const toast = document.querySelector("#toast");
 const voiceButton = document.querySelector("#voice-capture");
+const languagePicker = document.querySelector("#transcription-language");
 
 const defaultState = {
   activeSpaceId: "field-notes",
@@ -29,7 +41,10 @@ const defaultState = {
 };
 
 let state = loadState();
-let activeRecognition = null;
+let activeRecording = null;
+let speechWorker = null;
+let speechRequestId = 0;
+const speechRequests = new Map();
 let toastTimer = null;
 let resizeTimer = null;
 
@@ -76,11 +91,11 @@ function formatDate(value) {
   return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(value));
 }
 
-function showToast(message) {
+function showToast(message, duration = 3200) {
   toast.textContent = message;
   toast.classList.add("visible");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("visible"), 3200);
+  if (duration > 0) toastTimer = setTimeout(() => toast.classList.remove("visible"), duration);
 }
 
 function render() {
@@ -101,6 +116,38 @@ function render() {
   hint.classList.toggle("hidden", space.notes.length > 0);
   applySearch(query);
   requestAnimationFrame(positionCards);
+}
+
+function initLanguagePicker() {
+  const displayNames = new Intl.DisplayNames([navigator.language || "en"], { type: "language" });
+  let savedLanguage;
+  try {
+    savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  } catch (error) {
+    console.error("Could not load the preferred voice language.", error);
+  }
+  const browserLanguage = (navigator.language || "en").split("-")[0].toLowerCase();
+  const selectedLanguage = SPEECH_LANGUAGES.includes(savedLanguage)
+    ? savedLanguage
+    : SPEECH_LANGUAGES.includes(browserLanguage) ? browserLanguage : "en";
+
+  languagePicker.replaceChildren(...SPEECH_LANGUAGES
+    .map((language) => {
+      const option = document.createElement("option");
+      option.value = language;
+      option.textContent = SPEECH_LANGUAGE_LABELS[language] || displayNames.of(language) || language;
+      option.selected = language === selectedLanguage;
+      return option;
+    }));
+  languagePicker.value = selectedLanguage;
+  languagePicker.addEventListener("change", () => {
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, languagePicker.value);
+    } catch (error) {
+      console.error("Could not save the preferred voice language.", error);
+      showToast("Couldn't save the voice language on this device.");
+    }
+  });
 }
 
 function createNoteCard(note) {
@@ -233,77 +280,173 @@ function speakNote(text) {
   window.speechSynthesis.speak(utterance);
 }
 
-function startVoiceCapture() {
-  if (activeRecognition) {
-    activeRecognition.stop();
-    return;
-  }
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    showToast("Live dictation isn't supported here yet. Try Chrome, or type your thought into a new note.");
-    return;
-  }
-  if (!window.isSecureContext) {
-    showToast("Microphone access needs a secure connection (HTTPS or localhost).");
-    return;
-  }
-
-  const { note, textarea } = addNote("", true);
-  const recognition = new SpeechRecognition();
-  activeRecognition = recognition;
-  recognition.lang = navigator.language || "en-US";
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  let finalTextSoFar = note.text;
-  voiceButton.classList.add("listening");
-  voiceButton.setAttribute("aria-label", "Stop voice capture");
-  voiceButton.querySelector("span:nth-child(2)").textContent = "Listening…";
-  showToast("Listening. Your browser may send audio to its speech service to transcribe it.");
-
-  recognition.onresult = (event) => {
-    let interimText = "";
-    for (let index = event.resultIndex; index < event.results.length; index += 1) {
-      const transcript = event.results[index][0].transcript;
-      if (event.results[index].isFinal) finalTextSoFar += `${finalTextSoFar ? " " : ""}${transcript}`;
-      else interimText += transcript;
+function getSpeechWorker() {
+  if (speechWorker) return speechWorker;
+  speechWorker = new Worker(new URL("./asr-worker.js", import.meta.url), { type: "module" });
+  speechWorker.addEventListener("message", (event) => {
+    const { id, type, text, error, progress } = event.data;
+    if (type === "progress") {
+      const percent = Number.isFinite(progress) ? ` ${Math.round(progress)}%` : "";
+      showToast(`Preparing offline speech model${percent}… (first use only)`, 0);
+      return;
     }
-    textarea.value = `${finalTextSoFar}${interimText ? `${finalTextSoFar ? " " : ""}${interimText}` : ""}`;
-    note.text = finalTextSoFar;
-    updateCharacterCount(textarea.closest(".note-card"), textarea.value);
-    saveState();
-  };
-  recognition.onerror = (event) => {
-    const messages = {
-      "not-allowed": "Microphone permission was denied. Check your browser's site settings.",
-      "audio-capture": "No microphone was found. Check your device's audio settings.",
-      "network": "The speech service couldn't be reached. Check your connection and try again.",
-    };
-    showToast(messages[event.error] || `Voice capture stopped (${event.error}).`);
-  };
-  recognition.onend = () => {
-    if (activeRecognition !== recognition) return;
-    activeRecognition = null;
-    voiceButton.classList.remove("listening");
-    voiceButton.setAttribute("aria-label", "Capture a voice note");
-    voiceButton.querySelector("span:nth-child(2)").textContent = "Speak a thought";
-    note.text = textarea.value.trim();
-    saveState();
-    if (!note.text) {
-      activeSpace().notes = activeSpace().notes.filter((item) => item.id !== note.id);
-      saveState();
-      render();
+    if (type === "ready") {
+      showToast("Speech model ready. Transcribing on this device…", 0);
+      return;
     }
-  };
+    const request = speechRequests.get(id);
+    if (!request) return;
+    speechRequests.delete(id);
+    if (type === "result") request.resolve(text);
+    if (type === "error") request.reject(new Error(error));
+  });
+  speechWorker.addEventListener("error", (event) => {
+    console.error("Offline speech worker failed.", event.message);
+    for (const request of speechRequests.values()) request.reject(new Error("Offline speech recognition stopped unexpectedly."));
+    speechRequests.clear();
+    speechWorker?.terminate();
+    speechWorker = null;
+  });
+  return speechWorker;
+}
+
+function resampleAudio(samples, sourceSampleRate, targetSampleRate) {
+  const targetLength = Math.floor(samples.length * targetSampleRate / sourceSampleRate);
+  if (sourceSampleRate === targetSampleRate) return samples;
+  const output = new Float32Array(targetLength);
+  const ratio = sourceSampleRate / targetSampleRate;
+  for (let index = 0; index < targetLength; index += 1) {
+    const position = index * ratio;
+    const left = Math.floor(position);
+    const fraction = position - left;
+    const right = Math.min(left + 1, samples.length - 1);
+    output[index] = samples[left] * (1 - fraction) + samples[right] * fraction;
+  }
+  return output;
+}
+
+async function transcribeRecording(recording) {
+  const sampleCount = recording.chunks.reduce((total, chunk) => total + chunk.length, 0);
+  if (!sampleCount) return "";
+  const samples = new Float32Array(sampleCount);
+  let offset = 0;
+  for (const chunk of recording.chunks) {
+    samples.set(chunk, offset);
+    offset += chunk.length;
+  }
+  recording.chunks.length = 0;
+  const audio = resampleAudio(samples, recording.sampleRate, 16000);
+  let energy = 0;
+  for (const sample of audio) energy += sample * sample;
+  if (!audio.length || Math.sqrt(energy / audio.length) < 0.003) return "";
+  const id = ++speechRequestId;
+  const result = new Promise((resolve, reject) => speechRequests.set(id, { resolve, reject }));
+  getSpeechWorker().postMessage({ id, audio, language: languagePicker.value }, [audio.buffer]);
+  return result;
+}
+
+function setVoiceButtonState({ recording = false, processing = false } = {}) {
+  const busy = recording || processing;
+  voiceButton.classList.toggle("listening", recording);
+  voiceButton.disabled = processing;
+  voiceButton.setAttribute("aria-label", recording ? "Stop voice capture" : "Capture a voice note");
+  voiceButton.querySelector("span:nth-child(2)").textContent = recording
+    ? "Listening…"
+    : processing ? "Transcribing…" : "Speak a thought";
+  document.querySelector("#new-note").disabled = busy;
+  document.querySelector("#add-space").disabled = busy;
+  document.querySelector("#mobile-add-space").disabled = busy;
+  spaceList.querySelectorAll("button").forEach((button) => { button.disabled = busy; });
+}
+
+async function finishRecording(recording) {
+  if (activeRecording !== recording) return;
+  activeRecording = null;
+  recording.processor.onaudioprocess = null;
+  recording.source.disconnect();
+  recording.processor.disconnect();
+  recording.silence.disconnect();
+  for (const track of recording.stream.getTracks()) track.stop();
+  await recording.audioContext.close();
+  setVoiceButtonState({ processing: true });
+
+  showToast("Transcribing on this device. The multilingual model downloads once before first use.", 0);
   try {
-    recognition.start();
+    const transcript = (await transcribeRecording(recording)).trim();
+    const textarea = board.querySelector(`[data-note-id="${recording.note.id}"] .note-text`);
+    if (!textarea) return;
+    if (!transcript) {
+      showToast("I couldn't make out any words. Try again in a quieter place.");
+      return;
+    }
+    recording.note.text = transcript;
+    textarea.value = transcript;
+    updateCharacterCount(textarea.closest(".note-card"), transcript);
+    saveState();
+    showToast("Voice note transcribed privately on this device.");
   } catch (error) {
-    activeRecognition = null;
-    voiceButton.classList.remove("listening");
-    voiceButton.setAttribute("aria-label", "Capture a voice note");
-    voiceButton.querySelector("span:nth-child(2)").textContent = "Speak a thought";
-    console.error("Could not start voice capture.", error);
-    showToast("Couldn't start voice capture. Check microphone permission and try again.");
+    console.error("Offline transcription failed.", error);
+    const message = error instanceof Error ? error.message : "Unknown transcription error.";
+    showToast(`Couldn't transcribe this recording: ${message}`);
+  } finally {
+    setVoiceButtonState();
   }
+}
+
+async function startVoiceCapture() {
+  if (activeRecording) {
+    finishRecording(activeRecording);
+    return;
+  }
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia || !AudioContextClass) {
+    showToast("Microphone recording isn't supported here. Open Elsewhere over HTTPS in a current browser.");
+    return;
+  }
+  let stream;
+  let audioContext;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 }, video: false });
+    audioContext = new AudioContextClass();
+    await audioContext.resume();
+  } catch (error) {
+    for (const track of stream?.getTracks() ?? []) track.stop();
+    await audioContext?.close();
+    const messages = {
+      NotAllowedError: "Microphone permission was denied. Allow microphone access in your browser or device settings.",
+      NotFoundError: "No microphone was found. Check your device's audio settings.",
+      NotReadableError: "The microphone is busy or unavailable. Close other apps using it and try again.",
+    };
+    showToast(messages[error.name] || `Couldn't open the microphone: ${error.message}`);
+    return;
+  }
+
+  const source = audioContext.createMediaStreamSource(stream);
+  const processor = audioContext.createScriptProcessor(4096, 1, 1);
+  const silence = audioContext.createGain();
+  silence.gain.value = 0;
+  const chunks = [];
+  const recording = {
+    note: null,
+    stream,
+    audioContext,
+    sampleRate: audioContext.sampleRate,
+    source,
+    processor,
+    silence,
+    chunks,
+  };
+  processor.onaudioprocess = (event) => {
+    chunks.push(new Float32Array(event.inputBuffer.getChannelData(0)));
+  };
+  source.connect(processor);
+  processor.connect(silence);
+  silence.connect(audioContext.destination);
+  const { note } = addNote("", true);
+  recording.note = note;
+  activeRecording = recording;
+  setVoiceButtonState({ recording: true });
+  showToast("Listening. Tap again to stop; audio stays on this device.");
 }
 
 spaceList.addEventListener("click", (event) => {
@@ -348,8 +491,8 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "/" && !isTyping) {
     event.preventDefault();
     searchInput.focus();
-  } else if (event.key === "Escape" && activeRecognition) {
-    activeRecognition.stop();
+  } else if (event.key === "Escape" && activeRecording) {
+    finishRecording(activeRecording);
   }
 });
 
@@ -367,3 +510,4 @@ if ("serviceWorker" in navigator && window.location.protocol.startsWith("http"))
 }
 
 render();
+initLanguagePicker();

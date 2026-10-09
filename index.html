@@ -57,6 +57,10 @@
             </div>
             <div class="heading-tools">
               <span class="note-count" id="note-count">0 thoughts</span>
+              <label class="language-picker">
+                <span>VOICE LANGUAGE</span>
+                <select id="transcription-language" aria-label="Voice note language"></select>
+              </label>
               <button id="voice-capture" class="voice-button" type="button" aria-label="Capture a voice note">
                 <span class="voice-icon" aria-hidden="true">◖</span>
                 <span>Speak a thought</span>
@@ -96,6 +100,6 @@
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./app.js" defer></script>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

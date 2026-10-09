@@ -1,0 +1,8 @@
+{
+  "appId": "com.elsewhere.notes",
+  "appName": "Elsewhere",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  }
+}
