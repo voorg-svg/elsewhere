@@ -48,7 +48,6 @@
         </div>
       </aside>
 
-
       <main class="main">
         <header class="topbar">
           <div class="breadcrumbs">
@@ -68,7 +67,6 @@
           </div>
         </header>
 
-
         <section class="workspace">
           <div class="space-heading">
             <div>
@@ -82,3 +80,45 @@
                 <span>VOICE LANGUAGE</span>
                 <select id="transcription-language" aria-label="Voice note language"></select>
               </label>
+              <button id="voice-capture" class="voice-button" type="button" aria-label="Capture a voice note">
+                <span class="voice-icon" aria-hidden="true">◖</span>
+                <span>Speak a thought</span>
+                <span class="voice-shortcut">⌘ /</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="board-wrap">
+            <div id="board" class="board" aria-label="Your thought space">
+              <div class="board-hint" id="board-hint">
+                <span class="hint-spark" aria-hidden="true">✳</span>
+                <span>Your space is open.<br><strong>Drop a thought in.</strong></span>
+              </div>
+              <div class="board-caption">YOUR THOUGHT SPACE <span aria-hidden="true">✳</span></div>
+            </div>
+          </div>
+          <footer class="workspace-footer">
+            <span><span class="footer-dot"></span> Just you and your thoughts</span>
+            <span>Drag notes to make connections.</span>
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="space-dialog" class="modal">
+      <form id="space-form" method="dialog">
+        <div class="modal-eyebrow">MAKE A LITTLE ROOM</div>
+        <h2>A new space<span class="title-period">.</span></h2>
+        <label for="space-name">What will you call it?</label>
+        <input id="space-name" name="space-name" maxlength="48" placeholder="e.g. The garden, big ideas…" required>
+        <div class="modal-actions">
+          <button class="button button-quiet" value="cancel" type="submit">Cancel</button>
+          <button class="button button-dark" id="create-space" value="create" type="submit">Create space <span aria-hidden="true">↗</span></button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
