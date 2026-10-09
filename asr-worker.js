@@ -1,6 +1,6 @@
 import { env, pipeline } from "@huggingface/transformers";
 
-const MODEL_ID = "onnx-community/whisper-tiny";
+const MODEL_ID = "onnx-community/whisper-base";
 let transcriberPromise;
 
 env.useBrowserCache = true;

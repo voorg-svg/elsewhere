@@ -1,7 +1,95 @@
 const STORAGE_KEY = "elsewhere-notes-v1";
 const LANGUAGE_STORAGE_KEY = "elsewhere-voice-language-v1";
+const UI_LANGUAGE_STORAGE_KEY = "elsewhere-ui-language-v1";
 const SPACE_EMOJIS = ["✳", "☼", "❋", "⌂", "☁", "◇"];
 const NOTE_TONES = 6;
+const translations = {
+  en: {
+    yourSpaces: "YOUR SPACES", spaces: "Spaces", createSpace: "Create a new space",
+    newSpace: "New space", privateNotes: "Your notes stay on this device.",
+    findThought: "Find a thought…", searchNotes: "Search notes", newNote: "New note",
+    eyebrow: "A LITTLE ROOM TO THINK", spaceDescription: "Let your thoughts land wherever they want.",
+    interfaceLanguage: "INTERFACE", voiceLanguage: "VOICE LANGUAGE",
+    voiceNoteLanguage: "Voice note language", speakThought: "Speak a thought",
+    captureVoice: "Capture a voice note", stopVoiceCapture: "Stop voice capture", boardLabel: "Your thought space",
+    spaceOpen: "Your space is open.", dropThought: "Drop a thought in.",
+    boardCaption: "YOUR THOUGHT SPACE", justYou: "Just you and your thoughts",
+    dragConnections: "Drag notes to make connections.", modalEyebrow: "MAKE A LITTLE ROOM",
+    nameSpace: "What will you call it?", spacePlaceholder: "e.g. The garden, big ideas…",
+    cancel: "Cancel", createSpaceButton: "Create space", thought: "THOUGHT",
+    voiceNote: "VOICE NOTE", dragThought: "Drag to move this thought",
+    readAloud: "Read note aloud", readAloudTitle: "Read aloud", deleteNote: "Delete note",
+    noteText: "Note text", notePlaceholder: "Let the thought out…",
+    capturedVoice: "◖ captured by voice", takeYourTime: "take your time",
+    thoughtRemoved: "Thought removed.", addWords: "Add a few words before listening.",
+    ttsUnavailable: "Text-to-speech isn't available in this browser.",
+    preparingModel: "Preparing offline speech model{percent}… (first use only)",
+    modelReady: "Speech model ready. Transcribing on this device…",
+    transcribing: "Transcribing on this device. The multilingual model downloads once before first use.",
+    listening: "Listening. Tap again to stop; audio stays on this device.",
+    transcribed: "Voice note transcribed privately on this device.",
+    noWords: "I couldn't make out any words. Try again in a quieter place.",
+    microphoneUnsupported: "Microphone recording isn't supported here. Open Elsewhere over HTTPS in a current browser.",
+    microphoneDenied: "Microphone permission was denied. Allow microphone access in your browser or device settings.",
+    microphoneMissing: "No microphone was found. Check your device's audio settings.",
+    microphoneBusy: "The microphone is busy or unavailable. Close other apps using it and try again.",
+    openMicrophone: "Couldn't open the microphone: {message}",
+    transcribeError: "Couldn't transcribe this recording: {message}",
+    unknownError: "Unknown transcription error.", saveNoteError: "Couldn't save this note. Check your device's available storage.",
+    saveLanguageError: "Couldn't save the voice language on this device.",
+    saveUiLanguageError: "Couldn't save the interface language on this device.",
+    savePreferredLanguageError: "Couldn't save the preferred voice language.",
+  },
+  ar: {
+    yourSpaces: "مساحاتي", spaces: "المساحات", createSpace: "إنشاء مساحة جديدة",
+    newSpace: "مساحة جديدة", privateNotes: "تبقى ملاحظاتك على هذا الجهاز.",
+    findThought: "ابحث عن فكرة…", searchNotes: "البحث في الملاحظات", newNote: "ملاحظة جديدة",
+    eyebrow: "مساحة صغيرة للتفكير", spaceDescription: "دع أفكارك تستقر حيث تشاء.",
+    interfaceLanguage: "لغة الواجهة", voiceLanguage: "لغة التسجيل الصوتي",
+    voiceNoteLanguage: "لغة الملاحظة الصوتية", speakThought: "سجّل فكرة",
+    captureVoice: "تسجيل ملاحظة صوتية", stopVoiceCapture: "إيقاف التسجيل الصوتي", boardLabel: "مساحة أفكارك",
+    spaceOpen: "مساحتك جاهزة.", dropThought: "أضف فكرة هنا.",
+    boardCaption: "مساحة أفكارك", justYou: "أنت وأفكارك فقط",
+    dragConnections: "اسحب الملاحظات لربط الأفكار.", modalEyebrow: "افسح مساحة صغيرة",
+    nameSpace: "ماذا تريد أن تسميها؟", spacePlaceholder: "مثال: الحديقة، أفكار كبيرة…",
+    cancel: "إلغاء", createSpaceButton: "إنشاء مساحة", thought: "فكرة",
+    voiceNote: "ملاحظة صوتية", dragThought: "اسحب لنقل هذه الفكرة",
+    readAloud: "قراءة الملاحظة بصوت عالٍ", readAloudTitle: "استمع",
+    deleteNote: "حذف الملاحظة", noteText: "نص الملاحظة",
+    notePlaceholder: "أطلق العنان لفكرتك…", capturedVoice: "◖ سُجّلت صوتيًا",
+    takeYourTime: "خذ وقتك", thoughtRemoved: "تم حذف الفكرة.",
+    addWords: "أضف بضع كلمات قبل الاستماع.", ttsUnavailable: "تحويل النص إلى كلام غير متاح في هذا المتصفح.",
+    preparingModel: "جارٍ تجهيز نموذج الصوت دون اتصال{percent}… (للاستخدام الأول فقط)",
+    modelReady: "النموذج الصوتي جاهز. جارٍ تحويل التسجيل إلى نص على هذا الجهاز…",
+    transcribing: "جارٍ تحويل التسجيل إلى نص على هذا الجهاز. يُنزّل النموذج متعدد اللغات مرة واحدة قبل الاستخدام الأول.",
+    listening: "جارٍ الاستماع. اضغط مجددًا للإيقاف؛ يبقى الصوت على هذا الجهاز.",
+    transcribed: "تم تحويل الملاحظة الصوتية إلى نص على هذا الجهاز.",
+    noWords: "لم أتمكن من تمييز الكلمات. حاول مجددًا في مكان أكثر هدوءًا.",
+    microphoneUnsupported: "تسجيل الصوت غير مدعوم هنا. افتح Elsewhere عبر HTTPS باستخدام متصفح حديث.",
+    microphoneDenied: "لم يُسمح باستخدام الميكروفون. فعّل إذن الميكروفون في المتصفح أو إعدادات الجهاز.",
+    microphoneMissing: "لم يتم العثور على ميكروفون. تحقق من إعدادات الصوت في جهازك.",
+    microphoneBusy: "الميكروفون مشغول أو غير متاح. أغلق التطبيقات الأخرى التي تستخدمه ثم حاول مجددًا.",
+    openMicrophone: "تعذّر فتح الميكروفون: {message}",
+    transcribeError: "تعذّر تحويل التسجيل إلى نص: {message}",
+    unknownError: "خطأ غير معروف في تحويل الصوت إلى نص.",
+    saveNoteError: "تعذّر حفظ الملاحظة. تحقق من مساحة التخزين المتاحة على جهازك.",
+    saveLanguageError: "تعذّر حفظ لغة التسجيل الصوتي على هذا الجهاز.",
+    saveUiLanguageError: "تعذّر حفظ لغة الواجهة على هذا الجهاز.",
+    savePreferredLanguageError: "تعذّر حفظ لغة التسجيل المفضلة.",
+  },
+};
+
+function getInitialUiLanguage() {
+  try {
+    const saved = localStorage.getItem(UI_LANGUAGE_STORAGE_KEY);
+    if (saved === "en" || saved === "ar") return saved;
+  } catch (error) {
+    console.error("Could not load the preferred interface language.", error);
+  }
+  return (navigator.language || "en").toLowerCase().startsWith("ar") ? "ar" : "en";
+}
+
+let uiLanguage = getInitialUiLanguage();
 const SPEECH_LANGUAGES = [
   "en", "zh", "de", "es", "ru", "ko", "fr", "ja", "pt", "tr", "pl", "ca", "nl", "ar", "sv", "it",
   "id", "hi", "fi", "vi", "he", "uk", "el", "ms", "cs", "ro", "da", "hu", "ta", "no", "th", "ur",
@@ -11,7 +99,7 @@ const SPEECH_LANGUAGES = [
   "ht", "ps", "tk", "nn", "mt", "sa", "lb", "my", "bo", "tl", "mg", "as", "tt", "haw", "ln", "ha",
   "ba", "jw", "su",
 ];
-const SPEECH_LANGUAGE_LABELS = { bo: "Tibetan", ba: "Bashkir" };
+const SPEECH_LANGUAGE_LABELS = { ar: "العربية — Arabic", bo: "Tibetan", ba: "Bashkir" };
 
 const spaceList = document.querySelector("#space-list");
 const board = document.querySelector("#board");
@@ -22,21 +110,27 @@ const spaceForm = document.querySelector("#space-form");
 const toast = document.querySelector("#toast");
 const voiceButton = document.querySelector("#voice-capture");
 const languagePicker = document.querySelector("#transcription-language");
+const interfaceLanguagePicker = document.querySelector("#interface-language");
+
+function t(key, values = {}) {
+  const message = translations[uiLanguage][key] ?? translations.en[key] ?? key;
+  return message.replace(/\{(\w+)\}/g, (_, name) => values[name] ?? "");
+}
 
 const defaultState = {
   activeSpaceId: "field-notes",
   spaces: [
     {
       id: "field-notes",
-      name: "Field notes",
+      name: uiLanguage === "ar" ? "ملاحظات ميدانية" : "Field notes",
       notes: [
-        { id: "welcome", text: "A thought doesn't have to be finished to belong here. Catch it before it floats away.", x: 0.06, y: 0.08, tone: 1, voice: false, createdAt: Date.now() - 86400000 },
-        { id: "small-things", text: "Maybe the best ideas arrive sideways — on a walk, halfway through a sentence, somewhere with no notebook.", x: 0.41, y: 0.25, tone: 2, voice: false, createdAt: Date.now() - 3600000 },
-        { id: "listen", text: "Leave a little space between the thought and the thing you do with it.", x: 0.19, y: 0.54, tone: 3, voice: false, createdAt: Date.now() - 120000 },
+        { id: "welcome", text: uiLanguage === "ar" ? "لا يشترط أن تكتمل الفكرة كي تستحق مكانًا هنا. دوّنها قبل أن تفلت." : "A thought doesn't have to be finished to belong here. Catch it before it floats away.", x: 0.06, y: 0.08, tone: 1, voice: false, createdAt: Date.now() - 86400000 },
+        { id: "small-things", text: uiLanguage === "ar" ? "ربما تأتي أفضل الأفكار على حين غرة — أثناء المشي، أو في منتصف جملة، أو في مكان بلا دفتر." : "Maybe the best ideas arrive sideways — on a walk, halfway through a sentence, somewhere with no notebook.", x: 0.41, y: 0.25, tone: 2, voice: false, createdAt: Date.now() - 3600000 },
+        { id: "listen", text: uiLanguage === "ar" ? "اترك مساحة صغيرة بين الفكرة وما تفعله بها." : "Leave a little space between the thought and the thing you do with it.", x: 0.19, y: 0.54, tone: 3, voice: false, createdAt: Date.now() - 120000 },
       ],
     },
-    { id: "good-questions", name: "Good questions", notes: [] },
-    { id: "somewhere-later", name: "Somewhere, later", notes: [] },
+    { id: "good-questions", name: uiLanguage === "ar" ? "أسئلة جيدة" : "Good questions", notes: [] },
+    { id: "somewhere-later", name: uiLanguage === "ar" ? "في مكان آخر، لاحقًا" : "Somewhere, later", notes: [] },
   ],
 };
 
@@ -69,7 +163,7 @@ function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (error) {
     console.error("Could not save notes.", error);
-    showToast("Couldn't save this note. Check your device's available storage.");
+    showToast(t("saveNoteError"));
   }
 }
 
@@ -88,7 +182,7 @@ function escapeHtml(value) {
 }
 
 function formatDate(value) {
-  return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(value));
+  return new Intl.DateTimeFormat(uiLanguage, { month: "short", day: "numeric" }).format(new Date(value));
 }
 
 function showToast(message, duration = 3200) {
@@ -102,7 +196,8 @@ function render() {
   const space = activeSpace();
   document.querySelector("#current-space-name").textContent = space.name;
   document.querySelector("#space-title").innerHTML = `${escapeHtml(space.name)}<span class="title-period">.</span>`;
-  document.querySelector("#note-count").textContent = `${space.notes.length} ${space.notes.length === 1 ? "thought" : "thoughts"}`;
+  const thoughtCount = space.notes.length;
+  document.querySelector("#note-count").textContent = formatThoughtCount(thoughtCount);
   spaceList.innerHTML = state.spaces.map((item, index) => `
     <button class="space-item${item.id === space.id ? " active" : ""}" type="button" data-space-id="${escapeHtml(item.id)}" aria-current="${item.id === space.id ? "page" : "false"}">
       <span class="space-emoji" aria-hidden="true">${SPACE_EMOJIS[index % SPACE_EMOJIS.length]}</span>
@@ -118,8 +213,17 @@ function render() {
   requestAnimationFrame(positionCards);
 }
 
+function formatThoughtCount(count) {
+  if (uiLanguage !== "ar") return `${count} ${count === 1 ? "thought" : "thoughts"}`;
+  const plural = new Intl.PluralRules("ar").select(count);
+  if (plural === "zero") return "لا أفكار";
+  if (plural === "one") return "فكرة واحدة";
+  if (plural === "two") return "فكرتان";
+  return `${count} ${plural === "few" ? "أفكار" : "فكرة"}`;
+}
+
 function initLanguagePicker() {
-  const displayNames = new Intl.DisplayNames([navigator.language || "en"], { type: "language" });
+  const displayNames = new Intl.DisplayNames([uiLanguage], { type: "language" });
   let savedLanguage;
   try {
     savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
@@ -129,7 +233,7 @@ function initLanguagePicker() {
   const browserLanguage = (navigator.language || "en").split("-")[0].toLowerCase();
   const selectedLanguage = SPEECH_LANGUAGES.includes(savedLanguage)
     ? savedLanguage
-    : SPEECH_LANGUAGES.includes(browserLanguage) ? browserLanguage : "en";
+    : uiLanguage === "ar" ? "ar" : SPEECH_LANGUAGES.includes(browserLanguage) ? browserLanguage : "en";
 
   languagePicker.replaceChildren(...SPEECH_LANGUAGES
     .map((language) => {
@@ -145,8 +249,51 @@ function initLanguagePicker() {
       localStorage.setItem(LANGUAGE_STORAGE_KEY, languagePicker.value);
     } catch (error) {
       console.error("Could not save the preferred voice language.", error);
-      showToast("Couldn't save the voice language on this device.");
+      showToast(t("saveLanguageError"));
     }
+  });
+}
+
+function applyInterfaceLanguage() {
+  document.documentElement.lang = uiLanguage;
+  document.documentElement.dir = uiLanguage === "ar" ? "rtl" : "ltr";
+  document.title = uiLanguage === "ar"
+    ? "Elsewhere — ملاحظات صوتية خاصة دون اتصال"
+    : "Elsewhere Notes — Private Offline Voice Notes";
+  interfaceLanguagePicker.value = uiLanguage;
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    element.textContent = t(element.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+    element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    element.setAttribute("placeholder", t(element.dataset.i18nPlaceholder));
+  });
+  const displayNames = new Intl.DisplayNames([uiLanguage], { type: "language" });
+  for (const option of languagePicker.options) {
+    option.textContent = SPEECH_LANGUAGE_LABELS[option.value] || displayNames.of(option.value) || option.value;
+  }
+  languagePicker.setAttribute("aria-label", t("voiceNoteLanguage"));
+  voiceButton.setAttribute("aria-label", t("captureVoice"));
+}
+
+function initInterfaceLanguage() {
+  interfaceLanguagePicker.value = uiLanguage;
+  applyInterfaceLanguage();
+  interfaceLanguagePicker.addEventListener("change", () => {
+    uiLanguage = interfaceLanguagePicker.value;
+    applyInterfaceLanguage();
+    try {
+      localStorage.setItem(UI_LANGUAGE_STORAGE_KEY, uiLanguage);
+      if (!localStorage.getItem(LANGUAGE_STORAGE_KEY)) {
+        languagePicker.value = uiLanguage === "ar" ? "ar" : "en";
+      }
+    } catch (error) {
+      console.error("Could not save the preferred interface language.", error);
+      showToast(t("saveUiLanguageError"));
+    }
+    render();
   });
 }
 
@@ -155,15 +302,15 @@ function createNoteCard(note) {
   card.className = `note-card tone-${note.tone % NOTE_TONES}`;
   card.dataset.noteId = note.id;
   card.innerHTML = `
-    <div class="note-grip" title="Drag to move this thought">
-      <span class="note-meta">${note.voice ? "VOICE NOTE" : "THOUGHT"} · ${formatDate(note.createdAt)}</span>
+    <div class="note-grip" title="${t("dragThought")}">
+      <span class="note-meta">${t(note.voice ? "voiceNote" : "thought")} · ${formatDate(note.createdAt)}</span>
       <span class="note-tools">
-        <button class="icon-button speak-note" type="button" aria-label="Read note aloud" title="Read aloud">▷</button>
-        <button class="icon-button delete-note" type="button" aria-label="Delete note" title="Delete note">×</button>
+        <button class="icon-button speak-note" type="button" aria-label="${t("readAloud")}" title="${t("readAloudTitle")}">▷</button>
+        <button class="icon-button delete-note" type="button" aria-label="${t("deleteNote")}" title="${t("deleteNote")}">×</button>
       </span>
     </div>
-    <textarea class="note-text" aria-label="Note text" maxlength="4000" placeholder="Let the thought out…"></textarea>
-    <div class="note-footer"><span>${note.voice ? '<span class="voice-tag">◖ captured by voice</span>' : "take your time"}</span><span class="character-count"></span></div>`;
+    <textarea class="note-text" aria-label="${t("noteText")}" maxlength="4000" placeholder="${t("notePlaceholder")}" dir="auto"></textarea>
+    <div class="note-footer"><span>${note.voice ? `<span class="voice-tag">${t("capturedVoice")}</span>` : t("takeYourTime")}</span><span class="character-count"></span></div>`;
   const textarea = card.querySelector(".note-text");
   textarea.value = note.text;
   updateCharacterCount(card, note.text);
@@ -255,7 +402,7 @@ function deleteNote(noteId) {
   space.notes.splice(index, 1);
   saveState();
   render();
-  showToast("Thought removed.");
+  showToast(t("thoughtRemoved"));
 }
 
 function applySearch(query) {
@@ -267,16 +414,16 @@ function applySearch(query) {
 
 function speakNote(text) {
   if (!text.trim()) {
-    showToast("Add a few words before listening.");
+    showToast(t("addWords"));
     return;
   }
   if (!("speechSynthesis" in window)) {
-    showToast("Text-to-speech isn't available in this browser.");
+    showToast(t("ttsUnavailable"));
     return;
   }
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = navigator.language || "en-US";
+  utterance.lang = languagePicker.value;
   window.speechSynthesis.speak(utterance);
 }
 
@@ -287,11 +434,11 @@ function getSpeechWorker() {
     const { id, type, text, error, progress } = event.data;
     if (type === "progress") {
       const percent = Number.isFinite(progress) ? ` ${Math.round(progress)}%` : "";
-      showToast(`Preparing offline speech model${percent}… (first use only)`, 0);
+      showToast(t("preparingModel", { percent }), 0);
       return;
     }
     if (type === "ready") {
-      showToast("Speech model ready. Transcribing on this device…", 0);
+      showToast(t("modelReady"), 0);
       return;
     }
     const request = speechRequests.get(id);
@@ -349,11 +496,13 @@ function setVoiceButtonState({ recording = false, processing = false } = {}) {
   const busy = recording || processing;
   voiceButton.classList.toggle("listening", recording);
   voiceButton.disabled = processing;
-  voiceButton.setAttribute("aria-label", recording ? "Stop voice capture" : "Capture a voice note");
+  voiceButton.setAttribute("aria-label", t(recording ? "stopVoiceCapture" : "captureVoice"));
   voiceButton.querySelector("span:nth-child(2)").textContent = recording
-    ? "Listening…"
-    : processing ? "Transcribing…" : "Speak a thought";
+    ? (uiLanguage === "ar" ? "جارٍ الاستماع…" : "Listening…")
+    : processing ? (uiLanguage === "ar" ? "جارٍ التحويل…" : "Transcribing…") : t("speakThought");
   document.querySelector("#new-note").disabled = busy;
+  document.querySelector("#interface-language").disabled = busy;
+  languagePicker.disabled = busy;
   document.querySelector("#add-space").disabled = busy;
   document.querySelector("#mobile-add-space").disabled = busy;
   spaceList.querySelectorAll("button").forEach((button) => { button.disabled = busy; });
@@ -370,24 +519,24 @@ async function finishRecording(recording) {
   await recording.audioContext.close();
   setVoiceButtonState({ processing: true });
 
-  showToast("Transcribing on this device. The multilingual model downloads once before first use.", 0);
+  showToast(t("transcribing"), 0);
   try {
     const transcript = (await transcribeRecording(recording)).trim();
     const textarea = board.querySelector(`[data-note-id="${recording.note.id}"] .note-text`);
     if (!textarea) return;
     if (!transcript) {
-      showToast("I couldn't make out any words. Try again in a quieter place.");
+      showToast(t("noWords"));
       return;
     }
     recording.note.text = transcript;
     textarea.value = transcript;
     updateCharacterCount(textarea.closest(".note-card"), transcript);
     saveState();
-    showToast("Voice note transcribed privately on this device.");
+    showToast(t("transcribed"));
   } catch (error) {
     console.error("Offline transcription failed.", error);
-    const message = error instanceof Error ? error.message : "Unknown transcription error.";
-    showToast(`Couldn't transcribe this recording: ${message}`);
+    const message = error instanceof Error ? error.message : t("unknownError");
+    showToast(t("transcribeError", { message }));
   } finally {
     setVoiceButtonState();
   }
@@ -400,24 +549,24 @@ async function startVoiceCapture() {
   }
   const AudioContextClass = window.AudioContext || window.webkitAudioContext;
   if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia || !AudioContextClass) {
-    showToast("Microphone recording isn't supported here. Open Elsewhere over HTTPS in a current browser.");
+    showToast(t("microphoneUnsupported"));
     return;
   }
   let stream;
   let audioContext;
   try {
-    stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 }, video: false });
     audioContext = new AudioContextClass();
     await audioContext.resume();
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 }, video: false });
   } catch (error) {
     for (const track of stream?.getTracks() ?? []) track.stop();
     await audioContext?.close();
     const messages = {
-      NotAllowedError: "Microphone permission was denied. Allow microphone access in your browser or device settings.",
-      NotFoundError: "No microphone was found. Check your device's audio settings.",
-      NotReadableError: "The microphone is busy or unavailable. Close other apps using it and try again.",
+      NotAllowedError: t("microphoneDenied"),
+      NotFoundError: t("microphoneMissing"),
+      NotReadableError: t("microphoneBusy"),
     };
-    showToast(messages[error.name] || `Couldn't open the microphone: ${error.message}`);
+    showToast(messages[error.name] || t("openMicrophone", { message: error.message }));
     return;
   }
 
@@ -446,7 +595,7 @@ async function startVoiceCapture() {
   recording.note = note;
   activeRecording = recording;
   setVoiceButtonState({ recording: true });
-  showToast("Listening. Tap again to stop; audio stays on this device.");
+  showToast(t("listening"));
 }
 
 spaceList.addEventListener("click", (event) => {
@@ -509,5 +658,6 @@ if ("serviceWorker" in navigator && window.location.protocol.startsWith("http"))
   });
 }
 
-render();
 initLanguagePicker();
+initInterfaceLanguage();
+render();
