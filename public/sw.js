@@ -1,4 +1,4 @@
-const CACHE_NAME = "elsewhere-shell-v3";
+const CACHE_NAME = "elsewhere-shell-v6";
 const PRECACHE_ASSETS = null;
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", ...(PRECACHE_ASSETS || [])];
 
