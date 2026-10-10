@@ -18,6 +18,7 @@ const translations = {
     eyebrow: "A LITTLE ROOM TO THINK", spaceDescription: "Let your thoughts land wherever they want.",
     interfaceLanguage: "INTERFACE", boardLabel: "Your thought space",
     spaceOpen: "Your space is open.", dropThought: "Drop a thought in.",
+    startWriting: "Write your first note",
     boardCaption: "YOUR THOUGHT SPACE", justYou: "Just you and your thoughts",
     dragConnections: "Drag notes to make connections.", modalEyebrow: "MAKE A LITTLE ROOM",
     nameSpace: "What will you call it?", spacePlaceholder: "e.g. The garden, big ideas…",
@@ -45,6 +46,7 @@ const translations = {
     eyebrow: "مساحة صغيرة للتفكير", spaceDescription: "دع أفكارك تستقر حيث تشاء.",
     interfaceLanguage: "لغة الواجهة", boardLabel: "مساحة أفكارك",
     spaceOpen: "مساحتك جاهزة.", dropThought: "أضف فكرة هنا.",
+    startWriting: "اكتب ملاحظتك الأولى",
     boardCaption: "مساحة أفكارك", justYou: "أنت وأفكارك فقط",
     dragConnections: "اسحب الملاحظات لربط الأفكار.", modalEyebrow: "افسح مساحة صغيرة",
     nameSpace: "ماذا تريد أن تسميها؟", spacePlaceholder: "مثال: الحديقة، أفكار كبيرة…",
@@ -194,6 +196,7 @@ function render() {
     space.notes.forEach((note) => board.append(createNoteCard(note)));
   }
   hint.classList.toggle("hidden", space.notes.length > 0);
+  document.querySelector("#start-writing").hidden = isMindMap || space.notes.length > 0;
   applySearch(query);
   requestAnimationFrame(positionCards);
 }
@@ -684,6 +687,7 @@ document.querySelector("#new-note").addEventListener("click", () => {
   const root = space.notes.find((note) => note.parentId == null);
   if (root) addMapIdea(space, root.id);
 });
+document.querySelector("#start-writing").addEventListener("click", () => addNote());
 searchInput.addEventListener("input", () => applySearch(searchInput.value.trim().toLocaleLowerCase()));
 document.querySelector("#add-space").addEventListener("click", () => {
   document.querySelector("#space-name").value = "";

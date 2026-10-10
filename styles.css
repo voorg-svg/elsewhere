@@ -187,6 +187,9 @@ h1 { font-size: clamp(30px, 3vw, 39px); line-height: 1.1; }
 .board-hint { position: absolute; top: 42%; left: 50%; display: flex; align-items: center; gap: 11px; color: #a0a198; font-size: 11px; line-height: 1.65; transform: translate(-50%, -50%); pointer-events: none; transition: opacity .2s ease; }
 .board-hint strong { color: #797d74; font-weight: 500; }
 .board-hint.hidden { opacity: 0; }
+.empty-note-button { margin-top: 13px; padding: 9px 13px; border: 1px solid #dce6d8; border-radius: 8px; background: #edf3e9; color: #36533f; cursor: pointer; font: inherit; font-size: 11px; font-weight: 600; pointer-events: auto; }
+.empty-note-button:hover { border-color: #c9d9c8; background: #e3ecdf; }
+.empty-note-button:focus-visible { outline: 2px solid #6c9477; outline-offset: 2px; }
 .hint-spark { color: #93a48f; font-size: 24px; }
 
 .board-wrap:has(.board.mind-map) { overflow: auto; cursor: grab; scrollbar-color: #c6cdc3 transparent; scrollbar-width: thin; }

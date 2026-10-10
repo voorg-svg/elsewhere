@@ -1,5 +1,6 @@
-const CACHE_NAME = "elsewhere-shell-v1";
-const APP_SHELL = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg"];
+const CACHE_NAME = "elsewhere-shell-v7";
+const PRECACHE_ASSETS = null;
+const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", ...(PRECACHE_ASSETS || [])];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
@@ -20,10 +21,9 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
+    caches.match(event.request).then((cached) => cached || fetch(event.request).then(async (response) => {
       if (response.ok) {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        await caches.open(CACHE_NAME).then((cache) => cache.put(event.request, response.clone()));
       }
       return response;
     })),
