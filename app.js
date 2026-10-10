@@ -1,5 +1,4 @@
 const STORAGE_KEY = "elsewhere-notes-v1";
-const LANGUAGE_STORAGE_KEY = "elsewhere-voice-language-v1";
 const UI_LANGUAGE_STORAGE_KEY = "elsewhere-ui-language-v1";
 const SPACE_EMOJIS = ["✳", "☼", "❋", "⌂", "☁", "◇"];
 const NOTE_TONES = 6;
@@ -7,77 +6,55 @@ const translations = {
   en: {
     yourSpaces: "YOUR SPACES", spaces: "Spaces", createSpace: "Create a new space",
     newSpace: "New space", privateNotes: "Your notes stay on this device.",
+    notesSpace: "Notes space", ideaMap: "Idea map", newIdeaMap: "New idea map",
+    createIdeaMap: "Create idea map", mapSpaceDescription: "Grow one thought into a connected map.",
+    mapToolbarHint: "Build out your thinking, one connected idea at a time.",
+    fitMap: "Fit", zoomOut: "Zoom out", zoomIn: "Zoom in", fitMapView: "Fit map to view",
+    mapRoot: "STARTING IDEA", mapBranch: "BRANCH", addBranch: "Add a connected idea",
+    addIdea: "Add idea", ideaPlaceholder: "Write an idea…", removeIdea: "Delete idea",
+    deleteBranch: "Delete idea and its connected ideas",
+    rootIdeaProtected: "The starting idea can't be deleted.", removeBranchFirst: "Delete connected ideas first.",
     findThought: "Find a thought…", searchNotes: "Search notes", newNote: "New note",
     eyebrow: "A LITTLE ROOM TO THINK", spaceDescription: "Let your thoughts land wherever they want.",
-    interfaceLanguage: "INTERFACE", voiceLanguage: "VOICE LANGUAGE",
-    voiceNoteLanguage: "Voice note language", speakThought: "Record a voice note",
-    stopAndTranscribe: "Stop & transcribe",
-    captureVoice: "Capture a voice note", stopVoiceCapture: "Stop voice capture", boardLabel: "Your thought space",
+    interfaceLanguage: "INTERFACE", boardLabel: "Your thought space",
     spaceOpen: "Your space is open.", dropThought: "Drop a thought in.",
     boardCaption: "YOUR THOUGHT SPACE", justYou: "Just you and your thoughts",
     dragConnections: "Drag notes to make connections.", modalEyebrow: "MAKE A LITTLE ROOM",
     nameSpace: "What will you call it?", spacePlaceholder: "e.g. The garden, big ideas…",
+    spaceType: "SPACE TYPE",
     cancel: "Cancel", createSpaceButton: "Create space", thought: "THOUGHT",
-    voiceNote: "VOICE NOTE", dragThought: "Drag to move this thought",
-    readAloud: "Read note aloud", readAloudTitle: "Read aloud", deleteNote: "Delete note",
+    dragThought: "Drag to move this thought", deleteNote: "Delete note",
     noteText: "Note text", notePlaceholder: "Let the thought out…",
-    capturedVoice: "◖ captured by voice", takeYourTime: "take your time",
-    thoughtRemoved: "Thought removed.", addWords: "Add a few words before listening.",
-    ttsUnavailable: "Text-to-speech isn't available in this browser.",
-    preparingModel: "Preparing offline speech model{percent}… (first use only)",
-    modelReady: "Speech model ready. Transcribing on this device…",
-    transcribing: "Transcribing on this device. The multilingual model downloads once before first use.",
-    listening: "Listening. Tap again to stop; audio stays on this device.",
-    transcribed: "Voice note transcribed privately on this device.",
-    noWords: "I couldn't make out any words. Try again in a quieter place.",
-    microphoneUnsupported: "Microphone recording isn't supported here. Open Elsewhere over HTTPS in a current browser.",
-    microphoneDenied: "Microphone permission was denied. Allow microphone access in your browser or device settings.",
-    microphoneMissing: "No microphone was found. Check your device's audio settings.",
-    microphoneBusy: "The microphone is busy or unavailable. Close other apps using it and try again.",
-    openMicrophone: "Couldn't open the microphone: {message}",
-    transcribeError: "Couldn't transcribe this recording: {message}",
-    unknownError: "Unknown transcription error.", saveNoteError: "Couldn't save this note. Check your device's available storage.",
-    saveLanguageError: "Couldn't save the voice language on this device.",
+    takeYourTime: "take your time",
+    thoughtRemoved: "Thought removed.",
+    saveNoteError: "Couldn't save this note. Check your device's available storage.",
     saveUiLanguageError: "Couldn't save the interface language on this device.",
-    savePreferredLanguageError: "Couldn't save the preferred voice language.",
   },
   ar: {
     yourSpaces: "مساحاتي", spaces: "المساحات", createSpace: "إنشاء مساحة جديدة",
     newSpace: "مساحة جديدة", privateNotes: "تبقى ملاحظاتك على هذا الجهاز.",
+    notesSpace: "مساحة ملاحظات", ideaMap: "خريطة أفكار", newIdeaMap: "خريطة أفكار جديدة",
+    createIdeaMap: "إنشاء خريطة أفكار", mapSpaceDescription: "وسّع فكرة واحدة إلى خريطة مترابطة.",
+    mapToolbarHint: "وسّع أفكارك، فكرة مترابطة في كل مرة.",
+    fitMap: "ملاءمة", zoomOut: "تصغير", zoomIn: "تكبير", fitMapView: "ملاءمة الخريطة للعرض",
+    mapRoot: "الفكرة الأساسية", mapBranch: "فكرة فرعية", addBranch: "إضافة فكرة مترابطة",
+    addIdea: "إضافة فكرة", ideaPlaceholder: "اكتب فكرة…", removeIdea: "حذف الفكرة",
+    deleteBranch: "حذف الفكرة والأفكار المتصلة بها",
+    rootIdeaProtected: "لا يمكن حذف الفكرة الأساسية.", removeBranchFirst: "احذف الأفكار المتصلة أولًا.",
     findThought: "ابحث عن فكرة…", searchNotes: "البحث في الملاحظات", newNote: "ملاحظة جديدة",
     eyebrow: "مساحة صغيرة للتفكير", spaceDescription: "دع أفكارك تستقر حيث تشاء.",
-    interfaceLanguage: "لغة الواجهة", voiceLanguage: "لغة التسجيل الصوتي",
-    voiceNoteLanguage: "لغة الملاحظة الصوتية", speakThought: "سجّل ملاحظة صوتية",
-    stopAndTranscribe: "أوقف التسجيل وحوّله إلى نص",
-    captureVoice: "تسجيل ملاحظة صوتية", stopVoiceCapture: "إيقاف التسجيل الصوتي", boardLabel: "مساحة أفكارك",
+    interfaceLanguage: "لغة الواجهة", boardLabel: "مساحة أفكارك",
     spaceOpen: "مساحتك جاهزة.", dropThought: "أضف فكرة هنا.",
     boardCaption: "مساحة أفكارك", justYou: "أنت وأفكارك فقط",
     dragConnections: "اسحب الملاحظات لربط الأفكار.", modalEyebrow: "افسح مساحة صغيرة",
     nameSpace: "ماذا تريد أن تسميها؟", spacePlaceholder: "مثال: الحديقة، أفكار كبيرة…",
+    spaceType: "نوع المساحة",
     cancel: "إلغاء", createSpaceButton: "إنشاء مساحة", thought: "فكرة",
-    voiceNote: "ملاحظة صوتية", dragThought: "اسحب لنقل هذه الفكرة",
-    readAloud: "قراءة الملاحظة بصوت عالٍ", readAloudTitle: "استمع",
-    deleteNote: "حذف الملاحظة", noteText: "نص الملاحظة",
-    notePlaceholder: "أطلق العنان لفكرتك…", capturedVoice: "◖ سُجّلت صوتيًا",
+    dragThought: "اسحب لنقل هذه الفكرة", deleteNote: "حذف الملاحظة",
+    noteText: "نص الملاحظة", notePlaceholder: "أطلق العنان لفكرتك…",
     takeYourTime: "خذ وقتك", thoughtRemoved: "تم حذف الفكرة.",
-    addWords: "أضف بضع كلمات قبل الاستماع.", ttsUnavailable: "تحويل النص إلى كلام غير متاح في هذا المتصفح.",
-    preparingModel: "جارٍ تجهيز نموذج الصوت دون اتصال{percent}… (للاستخدام الأول فقط)",
-    modelReady: "النموذج الصوتي جاهز. جارٍ تحويل التسجيل إلى نص على هذا الجهاز…",
-    transcribing: "جارٍ تحويل التسجيل إلى نص على هذا الجهاز. يُنزّل النموذج متعدد اللغات مرة واحدة قبل الاستخدام الأول.",
-    listening: "جارٍ الاستماع. اضغط مجددًا للإيقاف؛ يبقى الصوت على هذا الجهاز.",
-    transcribed: "تم تحويل الملاحظة الصوتية إلى نص على هذا الجهاز.",
-    noWords: "لم أتمكن من تمييز الكلمات. حاول مجددًا في مكان أكثر هدوءًا.",
-    microphoneUnsupported: "تسجيل الصوت غير مدعوم هنا. افتح Elsewhere عبر HTTPS باستخدام متصفح حديث.",
-    microphoneDenied: "لم يُسمح باستخدام الميكروفون. فعّل إذن الميكروفون في المتصفح أو إعدادات الجهاز.",
-    microphoneMissing: "لم يتم العثور على ميكروفون. تحقق من إعدادات الصوت في جهازك.",
-    microphoneBusy: "الميكروفون مشغول أو غير متاح. أغلق التطبيقات الأخرى التي تستخدمه ثم حاول مجددًا.",
-    openMicrophone: "تعذّر فتح الميكروفون: {message}",
-    transcribeError: "تعذّر تحويل التسجيل إلى نص: {message}",
-    unknownError: "خطأ غير معروف في تحويل الصوت إلى نص.",
     saveNoteError: "تعذّر حفظ الملاحظة. تحقق من مساحة التخزين المتاحة على جهازك.",
-    saveLanguageError: "تعذّر حفظ لغة التسجيل الصوتي على هذا الجهاز.",
     saveUiLanguageError: "تعذّر حفظ لغة الواجهة على هذا الجهاز.",
-    savePreferredLanguageError: "تعذّر حفظ لغة التسجيل المفضلة.",
   },
 };
 
@@ -92,17 +69,6 @@ function getInitialUiLanguage() {
 }
 
 let uiLanguage = getInitialUiLanguage();
-const SPEECH_LANGUAGES = [
-  "en", "zh", "de", "es", "ru", "ko", "fr", "ja", "pt", "tr", "pl", "ca", "nl", "ar", "sv", "it",
-  "id", "hi", "fi", "vi", "he", "uk", "el", "ms", "cs", "ro", "da", "hu", "ta", "no", "th", "ur",
-  "hr", "bg", "lt", "la", "mi", "ml", "cy", "sk", "te", "fa", "lv", "bn", "sr", "az", "sl", "kn",
-  "et", "mk", "br", "eu", "is", "hy", "ne", "mn", "bs", "kk", "sq", "sw", "gl", "mr", "pa", "si",
-  "km", "sn", "yo", "so", "af", "oc", "ka", "be", "tg", "sd", "gu", "am", "yi", "lo", "uz", "fo",
-  "ht", "ps", "tk", "nn", "mt", "sa", "lb", "my", "bo", "tl", "mg", "as", "tt", "haw", "ln", "ha",
-  "ba", "jw", "su",
-];
-const SPEECH_LANGUAGE_LABELS = { ar: "العربية — Arabic", bo: "Tibetan", ba: "Bashkir" };
-
 const spaceList = document.querySelector("#space-list");
 const board = document.querySelector("#board");
 const hint = document.querySelector("#board-hint");
@@ -110,9 +76,10 @@ const searchInput = document.querySelector("#search-input");
 const spaceDialog = document.querySelector("#space-dialog");
 const spaceForm = document.querySelector("#space-form");
 const toast = document.querySelector("#toast");
-const voiceButton = document.querySelector("#voice-capture");
-const languagePicker = document.querySelector("#transcription-language");
 const interfaceLanguagePicker = document.querySelector("#interface-language");
+const mapToolbar = document.querySelector("#map-toolbar");
+const boardWrap = document.querySelector(".board-wrap");
+let mindMapZoom = 1;
 
 function t(key, values = {}) {
   const message = translations[uiLanguage][key] ?? translations.en[key] ?? key;
@@ -126,9 +93,9 @@ const defaultState = {
       id: "field-notes",
       name: uiLanguage === "ar" ? "ملاحظات ميدانية" : "Field notes",
       notes: [
-        { id: "welcome", text: uiLanguage === "ar" ? "لا يشترط أن تكتمل الفكرة كي تستحق مكانًا هنا. دوّنها قبل أن تفلت." : "A thought doesn't have to be finished to belong here. Catch it before it floats away.", x: 0.06, y: 0.08, tone: 1, voice: false, createdAt: Date.now() - 86400000 },
-        { id: "small-things", text: uiLanguage === "ar" ? "ربما تأتي أفضل الأفكار على حين غرة — أثناء المشي، أو في منتصف جملة، أو في مكان بلا دفتر." : "Maybe the best ideas arrive sideways — on a walk, halfway through a sentence, somewhere with no notebook.", x: 0.41, y: 0.25, tone: 2, voice: false, createdAt: Date.now() - 3600000 },
-        { id: "listen", text: uiLanguage === "ar" ? "اترك مساحة صغيرة بين الفكرة وما تفعله بها." : "Leave a little space between the thought and the thing you do with it.", x: 0.19, y: 0.54, tone: 3, voice: false, createdAt: Date.now() - 120000 },
+        { id: "welcome", text: uiLanguage === "ar" ? "لا يشترط أن تكتمل الفكرة كي تستحق مكانًا هنا. دوّنها قبل أن تفلت." : "A thought doesn't have to be finished to belong here. Catch it before it floats away.", x: 0.06, y: 0.08, tone: 1, createdAt: Date.now() - 86400000 },
+        { id: "small-things", text: uiLanguage === "ar" ? "ربما تأتي أفضل الأفكار على حين غرة — أثناء المشي، أو في منتصف جملة، أو في مكان بلا دفتر." : "Maybe the best ideas arrive sideways — on a walk, halfway through a sentence, somewhere with no notebook.", x: 0.41, y: 0.25, tone: 2, createdAt: Date.now() - 3600000 },
+        { id: "listen", text: uiLanguage === "ar" ? "اترك مساحة صغيرة بين الفكرة وما تفعله بها." : "Leave a little space between the thought and the thing you do with it.", x: 0.19, y: 0.54, tone: 3, createdAt: Date.now() - 120000 },
       ],
     },
     { id: "good-questions", name: uiLanguage === "ar" ? "أسئلة جيدة" : "Good questions", notes: [] },
@@ -137,10 +104,6 @@ const defaultState = {
 };
 
 let state = loadState();
-let activeRecording = null;
-let speechWorker = null;
-let speechRequestId = 0;
-const speechRequests = new Map();
 let toastTimer = null;
 let resizeTimer = null;
 
@@ -196,20 +159,40 @@ function showToast(message, duration = 3200) {
 
 function render() {
   const space = activeSpace();
+  const isMindMap = space.type === "mindmap";
   document.querySelector("#current-space-name").textContent = space.name;
   document.querySelector("#space-title").innerHTML = `${escapeHtml(space.name)}<span class="title-period">.</span>`;
   const thoughtCount = space.notes.length;
-  document.querySelector("#note-count").textContent = formatThoughtCount(thoughtCount);
+  document.querySelector("#note-count").textContent = isMindMap
+    ? formatIdeaCount(thoughtCount)
+    : formatThoughtCount(thoughtCount);
   spaceList.innerHTML = state.spaces.map((item, index) => `
     <button class="space-item${item.id === space.id ? " active" : ""}" type="button" data-space-id="${escapeHtml(item.id)}" aria-current="${item.id === space.id ? "page" : "false"}">
-      <span class="space-emoji" aria-hidden="true">${SPACE_EMOJIS[index % SPACE_EMOJIS.length]}</span>
+        <span class="space-emoji" aria-hidden="true">${item.type === "mindmap" ? "⌘" : SPACE_EMOJIS[index % SPACE_EMOJIS.length]}</span>
       <span class="space-name">${escapeHtml(item.name)}</span>
       <span class="space-item-count">${item.notes.length}</span>
     </button>`).join("");
 
+  document.querySelector("#space-description").textContent = isMindMap
+    ? t("mapSpaceDescription")
+    : t("spaceDescription");
+  const newNoteLabel = document.querySelector("#new-note .button-label");
+  newNoteLabel.textContent = isMindMap ? t("addIdea") : t("newNote");
+  document.querySelector("#new-note").setAttribute("aria-label", isMindMap ? t("addIdea") : t("newNote"));
+  document.querySelector("#new-note").setAttribute("title", isMindMap ? t("addIdea") : t("newNote"));
+  board.classList.toggle("mind-map", isMindMap);
+  mapToolbar.hidden = !isMindMap;
+  board.style.removeProperty("width");
+  board.style.removeProperty("height");
+  boardWrap.scrollLeft = 0;
+  boardWrap.scrollTop = 0;
   const query = searchInput.value.trim().toLocaleLowerCase();
-  board.querySelectorAll(".note-card").forEach((card) => card.remove());
-  space.notes.forEach((note) => board.append(createNoteCard(note)));
+  board.querySelectorAll(".note-card, .mind-map-canvas").forEach((card) => card.remove());
+  if (isMindMap) {
+    board.append(createMindMap(space));
+  } else {
+    space.notes.forEach((note) => board.append(createNoteCard(note)));
+  }
   hint.classList.toggle("hidden", space.notes.length > 0);
   applySearch(query);
   requestAnimationFrame(positionCards);
@@ -224,44 +207,17 @@ function formatThoughtCount(count) {
   return `${count} ${plural === "few" ? "أفكار" : "فكرة"}`;
 }
 
-function initLanguagePicker() {
-  const displayNames = new Intl.DisplayNames([uiLanguage], { type: "language" });
-  let savedLanguage;
-  try {
-    savedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-  } catch (error) {
-    console.error("Could not load the preferred voice language.", error);
-  }
-  const browserLanguage = (navigator.language || "en").split("-")[0].toLowerCase();
-  const selectedLanguage = SPEECH_LANGUAGES.includes(savedLanguage)
-    ? savedLanguage
-    : uiLanguage === "ar" ? "ar" : SPEECH_LANGUAGES.includes(browserLanguage) ? browserLanguage : "en";
-
-  languagePicker.replaceChildren(...SPEECH_LANGUAGES
-    .map((language) => {
-      const option = document.createElement("option");
-      option.value = language;
-      option.textContent = SPEECH_LANGUAGE_LABELS[language] || displayNames.of(language) || language;
-      option.selected = language === selectedLanguage;
-      return option;
-    }));
-  languagePicker.value = selectedLanguage;
-  languagePicker.addEventListener("change", () => {
-    try {
-      localStorage.setItem(LANGUAGE_STORAGE_KEY, languagePicker.value);
-    } catch (error) {
-      console.error("Could not save the preferred voice language.", error);
-      showToast(t("saveLanguageError"));
-    }
-  });
+function formatIdeaCount(count) {
+  if (uiLanguage === "ar") return `${count} ${count === 1 ? "فكرة" : "أفكار"}`;
+  return `${count} ${count === 1 ? "idea" : "ideas"}`;
 }
 
 function applyInterfaceLanguage() {
   document.documentElement.lang = uiLanguage;
   document.documentElement.dir = uiLanguage === "ar" ? "rtl" : "ltr";
   document.title = uiLanguage === "ar"
-    ? "Elsewhere — ملاحظات صوتية خاصة دون اتصال"
-    : "Elsewhere Notes — Private Offline Voice Notes";
+    ? "Elsewhere — مساحة صغيرة للأفكار"
+    : "Elsewhere Notes — A Space for Thoughts";
   interfaceLanguagePicker.value = uiLanguage;
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     element.textContent = t(element.dataset.i18n);
@@ -272,12 +228,13 @@ function applyInterfaceLanguage() {
   document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
     element.setAttribute("placeholder", t(element.dataset.i18nPlaceholder));
   });
-  const displayNames = new Intl.DisplayNames([uiLanguage], { type: "language" });
-  for (const option of languagePicker.options) {
-    option.textContent = SPEECH_LANGUAGE_LABELS[option.value] || displayNames.of(option.value) || option.value;
-  }
-  languagePicker.setAttribute("aria-label", t("voiceNoteLanguage"));
-  voiceButton.setAttribute("aria-label", t("captureVoice"));
+  document.querySelector("#space-type").setAttribute("aria-label", t("spaceType"));
+  document.querySelector('[data-map-action="zoom-out"]').setAttribute("aria-label", t("zoomOut"));
+  document.querySelector('[data-map-action="zoom-out"]').title = t("zoomOut");
+  document.querySelector('[data-map-action="zoom-in"]').setAttribute("aria-label", t("zoomIn"));
+  document.querySelector('[data-map-action="zoom-in"]').title = t("zoomIn");
+  document.querySelector('[data-map-action="fit"]').setAttribute("aria-label", t("fitMapView"));
+  document.querySelector('[data-map-action="fit"]').title = t("fitMapView");
 }
 
 function initInterfaceLanguage() {
@@ -288,9 +245,6 @@ function initInterfaceLanguage() {
     applyInterfaceLanguage();
     try {
       localStorage.setItem(UI_LANGUAGE_STORAGE_KEY, uiLanguage);
-      if (!localStorage.getItem(LANGUAGE_STORAGE_KEY)) {
-        languagePicker.value = uiLanguage === "ar" ? "ar" : "en";
-      }
     } catch (error) {
       console.error("Could not save the preferred interface language.", error);
       showToast(t("saveUiLanguageError"));
@@ -305,14 +259,13 @@ function createNoteCard(note) {
   card.dataset.noteId = note.id;
   card.innerHTML = `
     <div class="note-grip" title="${t("dragThought")}">
-      <span class="note-meta">${t(note.voice ? "voiceNote" : "thought")} · ${formatDate(note.createdAt)}</span>
+      <span class="note-meta">${t("thought")} · ${formatDate(note.createdAt)}</span>
       <span class="note-tools">
-        <button class="icon-button speak-note" type="button" aria-label="${t("readAloud")}" title="${t("readAloudTitle")}">▷</button>
         <button class="icon-button delete-note" type="button" aria-label="${t("deleteNote")}" title="${t("deleteNote")}">×</button>
       </span>
     </div>
     <textarea class="note-text" aria-label="${t("noteText")}" maxlength="4000" placeholder="${t("notePlaceholder")}" dir="auto"></textarea>
-    <div class="note-footer"><span>${note.voice ? `<span class="voice-tag">${t("capturedVoice")}</span>` : t("takeYourTime")}</span><span class="character-count"></span></div>`;
+    <div class="note-footer"><span>${t("takeYourTime")}</span><span class="character-count"></span></div>`;
   const textarea = card.querySelector(".note-text");
   textarea.value = note.text;
   updateCharacterCount(card, note.text);
@@ -322,13 +275,298 @@ function createNoteCard(note) {
     saveState();
   });
   card.querySelector(".delete-note").addEventListener("click", () => deleteNote(note.id));
-  card.querySelector(".speak-note").addEventListener("click", () => speakNote(note.text));
   card.querySelector(".note-grip").addEventListener("pointerdown", (event) => startDrag(event, card, note));
   return card;
 }
 
 function updateCharacterCount(card, text) {
   card.querySelector(".character-count").textContent = text.length ? `${text.length}` : "";
+}
+
+function createMindMap(space) {
+  const canvas = document.createElement("div");
+  canvas.className = "mind-map-canvas";
+  const stage = document.createElement("div");
+  stage.className = "mind-map-stage";
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.classList.add("mind-map-links");
+  svg.setAttribute("aria-hidden", "true");
+  stage.append(svg);
+
+  for (const note of space.notes) {
+    const isRoot = note.parentId == null;
+    const node = document.createElement("article");
+    node.className = `mind-map-node tone-${note.tone % NOTE_TONES}${isRoot ? " root" : ""}`;
+    node.dataset.noteId = note.id;
+
+    const heading = document.createElement("div");
+    heading.className = "mind-map-node-heading";
+    const kind = document.createElement("span");
+    kind.textContent = t(isRoot ? "mapRoot" : "mapBranch");
+    heading.append(kind);
+
+    const actions = document.createElement("span");
+    actions.className = "mind-map-node-actions";
+    const addButton = document.createElement("button");
+    addButton.className = "icon-button add-branch";
+    addButton.type = "button";
+    addButton.textContent = "+";
+    addButton.setAttribute("aria-label", t("addBranch"));
+    addButton.title = t("addBranch");
+    addButton.addEventListener("click", () => addMapIdea(space, note.id));
+    actions.append(addButton);
+
+    if (!isRoot) {
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "icon-button delete-map-idea";
+      deleteButton.type = "button";
+      deleteButton.textContent = "×";
+      deleteButton.setAttribute("aria-label", t("deleteBranch"));
+      deleteButton.title = t("deleteBranch");
+      deleteButton.addEventListener("click", () => deleteMapIdea(space, note.id));
+      actions.append(deleteButton);
+    }
+
+    heading.append(actions);
+    const input = document.createElement("textarea");
+    input.className = "mind-map-text";
+    input.value = note.text;
+    input.maxLength = 4000;
+    input.rows = 3;
+    input.placeholder = t("ideaPlaceholder");
+    input.setAttribute("aria-label", t("noteText"));
+    input.dir = "auto";
+    input.addEventListener("input", () => {
+      note.text = input.value;
+      saveState();
+    });
+    node.append(heading, input);
+    heading.addEventListener("pointerdown", (event) => startMapNodeDrag(event, heading, node, note, stage));
+    stage.append(node);
+  }
+
+  canvas.append(stage);
+  canvas.addEventListener("pointerdown", startMapPan);
+  requestAnimationFrame(() => layoutMindMap(canvas, space.notes));
+  return canvas;
+}
+
+function layoutMindMap(canvas, notes) {
+  const stage = canvas.querySelector(".mind-map-stage");
+  const nodesById = new Map(notes.map((note) => [note.id, note]));
+  const children = new Map(notes.map((note) => [note.id, []]));
+  for (const note of notes) {
+    if (note.parentId != null) children.get(note.parentId)?.push(note);
+  }
+  const root = notes.find((note) => note.parentId == null) ?? notes[0];
+  if (!root) return;
+
+  const leafPositions = new Map();
+  let leafCount = 0;
+  let maxDepth = 0;
+  function assign(node, depth) {
+    maxDepth = Math.max(maxDepth, depth);
+    const descendants = children.get(node.id) ?? [];
+    if (!descendants.length) {
+      const position = leafCount++;
+      leafPositions.set(node.id, [position, position]);
+      return position;
+    }
+    const positions = descendants.map((child) => assign(child, depth + 1));
+    const first = leafPositions.get(descendants[0].id)[0];
+    const last = leafPositions.get(descendants[descendants.length - 1].id)[1];
+    leafPositions.set(node.id, [first, last]);
+    return (first + last) / 2;
+  }
+  assign(root, 0);
+
+  const width = Math.max(960, 100 + (maxDepth + 1) * 330);
+  const height = Math.max(600, 150 + leafCount * 180);
+  const topPadding = (height - (150 + leafCount * 180)) / 2;
+  stage.style.width = `${width}px`;
+  stage.style.height = `${height}px`;
+  canvas.dataset.width = `${width}`;
+  canvas.dataset.height = `${height}`;
+  const positions = new Map();
+  for (const note of notes) {
+    const [first, last] = leafPositions.get(note.id) ?? [0, 0];
+    const depth = getMapDepth(note, nodesById);
+    const position = {
+      x: note.mapX ?? 60 + depth * 330,
+      y: note.mapY ?? topPadding + 40 + ((first + last) / 2) * 180,
+    };
+    positions.set(note.id, position);
+    const element = stage.querySelector(`[data-note-id="${CSS.escape(note.id)}"]`);
+    if (element) {
+      element.style.left = `${position.x}px`;
+      element.style.top = `${position.y}px`;
+    }
+  }
+
+  const svg = stage.querySelector(".mind-map-links");
+  svg.setAttribute("width", `${width}`);
+  svg.setAttribute("height", `${height}`);
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  drawMindMapLinks(stage, notes);
+  applyMindMapZoom(canvas);
+}
+
+function applyMindMapZoom(canvas, zoom = mindMapZoom) {
+  mindMapZoom = Math.min(1.5, Math.max(0.35, zoom));
+  const stage = canvas.querySelector(".mind-map-stage");
+  const width = Number(canvas.dataset.width);
+  const height = Number(canvas.dataset.height);
+  stage.style.transform = `scale(${mindMapZoom})`;
+  canvas.style.width = `${width * mindMapZoom}px`;
+  canvas.style.height = `${height * mindMapZoom}px`;
+  board.style.width = `${Math.max(boardWrap.clientWidth, width * mindMapZoom)}px`;
+  board.style.height = `${Math.max(boardWrap.clientHeight, height * mindMapZoom)}px`;
+  document.querySelector("#map-zoom-level").textContent = `${Math.round(mindMapZoom * 100)}%`;
+}
+
+function fitMindMap() {
+  const canvas = board.querySelector(".mind-map-canvas");
+  if (!canvas) return;
+  const width = Number(canvas.dataset.width);
+  const height = Number(canvas.dataset.height);
+  const zoom = Math.min(1, (boardWrap.clientWidth - 40) / width, (boardWrap.clientHeight - 40) / height);
+  applyMindMapZoom(canvas, Math.max(0.35, zoom));
+  boardWrap.scrollLeft = 0;
+  boardWrap.scrollTop = 0;
+}
+
+function startMapNodeDrag(event, handle, node, note, stage) {
+  if (event.button !== 0 || event.target.closest("button, textarea")) return;
+  event.preventDefault();
+  const canvas = stage.parentElement;
+  const scale = mindMapZoom;
+  const startX = event.clientX;
+  const startY = event.clientY;
+  const initialX = node.offsetLeft;
+  const initialY = node.offsetTop;
+  handle.setPointerCapture(event.pointerId);
+  node.classList.add("dragging");
+
+  function move(moveEvent) {
+    const x = Math.min(stage.offsetWidth - node.offsetWidth - 12,
+      Math.max(12, initialX + (moveEvent.clientX - startX) / scale));
+    const y = Math.min(stage.offsetHeight - node.offsetHeight - 12,
+      Math.max(12, initialY + (moveEvent.clientY - startY) / scale));
+    node.style.left = `${x}px`;
+    node.style.top = `${y}px`;
+    note.mapX = x;
+    note.mapY = y;
+    drawMindMapLinks(stage, activeSpace().notes);
+  }
+
+  function end() {
+    node.classList.remove("dragging");
+    handle.removeEventListener("pointermove", move);
+    handle.removeEventListener("pointerup", end);
+    handle.removeEventListener("pointercancel", end);
+    saveState();
+  }
+
+  handle.addEventListener("pointermove", move);
+  handle.addEventListener("pointerup", end);
+  handle.addEventListener("pointercancel", end);
+}
+
+function startMapPan(event) {
+  if (event.button !== 0 || event.target.closest(".mind-map-node, button, textarea")) return;
+  const startX = event.clientX;
+  const startY = event.clientY;
+  const startLeft = boardWrap.scrollLeft;
+  const startTop = boardWrap.scrollTop;
+  boardWrap.classList.add("panning");
+
+  function move(moveEvent) {
+    boardWrap.scrollLeft = startLeft - (moveEvent.clientX - startX);
+    boardWrap.scrollTop = startTop - (moveEvent.clientY - startY);
+  }
+  function end() {
+    boardWrap.classList.remove("panning");
+    window.removeEventListener("pointermove", move);
+    window.removeEventListener("pointerup", end);
+    window.removeEventListener("pointercancel", end);
+  }
+  window.addEventListener("pointermove", move);
+  window.addEventListener("pointerup", end, { once: true });
+  window.addEventListener("pointercancel", end, { once: true });
+}
+
+function drawMindMapLinks(stage, notes) {
+  const svg = stage.querySelector(".mind-map-links");
+  svg.replaceChildren();
+  for (const note of notes) {
+    if (note.parentId == null) continue;
+    const parentElement = stage.querySelector(`[data-note-id="${CSS.escape(note.parentId)}"]`);
+    const childElement = stage.querySelector(`[data-note-id="${CSS.escape(note.id)}"]`);
+    if (!parentElement || !childElement
+      || parentElement.classList.contains("search-hidden")
+      || childElement.classList.contains("search-hidden")) continue;
+    const parent = { x: parentElement.offsetLeft, y: parentElement.offsetTop };
+    const child = { x: childElement.offsetLeft, y: childElement.offsetTop };
+    const toRight = child.x >= parent.x;
+    const startX = parent.x + (toRight ? parentElement.offsetWidth : 0);
+    const startY = parent.y + parentElement.offsetHeight / 2;
+    const endX = child.x + (toRight ? 0 : childElement.offsetWidth);
+    const endY = child.y + childElement.offsetHeight / 2;
+    const bend = Math.max(42, Math.abs(endX - startX) * 0.42);
+    const control = toRight ? bend : -bend;
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", `M ${startX} ${startY} C ${startX + control} ${startY}, ${endX - control} ${endY}, ${endX} ${endY}`);
+    svg.append(path);
+  }
+}
+
+function getMapDepth(note, notesById) {
+  let depth = 0;
+  let current = note;
+  while (current.parentId != null) {
+    const parent = notesById.get(current.parentId);
+    if (!parent) break;
+    depth += 1;
+    current = parent;
+  }
+  return depth;
+}
+
+function addMapIdea(space, parentId) {
+  const index = space.notes.length;
+  const note = {
+    id: crypto.randomUUID(),
+    text: "",
+    parentId,
+    tone: index % NOTE_TONES,
+    createdAt: Date.now(),
+  };
+  space.notes.push(note);
+  saveState();
+  render();
+  board.querySelector(`[data-note-id="${CSS.escape(note.id)}"] .mind-map-text`)?.focus();
+}
+
+function deleteMapIdea(space, noteId) {
+  const note = space.notes.find((item) => item.id === noteId);
+  if (!note || note.parentId == null) {
+    showToast(t("rootIdeaProtected"));
+    return;
+  }
+  const branchIds = new Set([noteId]);
+  let foundDescendant = true;
+  while (foundDescendant) {
+    foundDescendant = false;
+    for (const item of space.notes) {
+      if (branchIds.has(item.parentId) && !branchIds.has(item.id)) {
+        branchIds.add(item.id);
+        foundDescendant = true;
+      }
+    }
+  }
+  space.notes = space.notes.filter((item) => !branchIds.has(item.id));
+  saveState();
+  render();
 }
 
 function positionCards() {
@@ -378,7 +616,7 @@ function startDrag(event, card, note) {
   card.addEventListener("pointercancel", end);
 }
 
-function addNote(text = "", voice = false) {
+function addNote(text = "") {
   const space = activeSpace();
   const index = space.notes.length;
   const note = {
@@ -387,7 +625,6 @@ function addNote(text = "", voice = false) {
     x: Math.min(0.08 + (index % 3) * 0.26, 0.68),
     y: Math.min(0.06 + Math.floor(index / 3) * 0.23, 0.8),
     tone: index % NOTE_TONES,
-    voice,
     createdAt: Date.now(),
   };
   space.notes.push(note);
@@ -409,196 +646,12 @@ function deleteNote(noteId) {
 }
 
 function applySearch(query) {
-  board.querySelectorAll(".note-card").forEach((card) => {
+  board.querySelectorAll(".note-card, .mind-map-node").forEach((card) => {
     const note = activeSpace().notes.find((item) => item.id === card.dataset.noteId);
-    card.classList.toggle("search-hidden", Boolean(query) && !note.text.toLocaleLowerCase().includes(query));
+    card.classList.toggle("search-hidden", Boolean(query) && !note?.text.toLocaleLowerCase().includes(query));
   });
-}
-
-function speakNote(text) {
-  if (!text.trim()) {
-    showToast(t("addWords"));
-    return;
-  }
-  if (!("speechSynthesis" in window)) {
-    showToast(t("ttsUnavailable"));
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = languagePicker.value;
-  window.speechSynthesis.speak(utterance);
-}
-
-function getSpeechWorker() {
-  if (speechWorker) return speechWorker;
-  speechWorker = new Worker(new URL("./asr-worker.js", import.meta.url), { type: "module" });
-  speechWorker.addEventListener("message", (event) => {
-    const { id, type, text, error, progress } = event.data;
-    if (type === "progress") {
-      const percent = Number.isFinite(progress) ? ` ${Math.round(progress)}%` : "";
-      showToast(t("preparingModel", { percent }), 0);
-      return;
-    }
-    if (type === "ready") {
-      showToast(t("modelReady"), 0);
-      return;
-    }
-    const request = speechRequests.get(id);
-    if (!request) return;
-    speechRequests.delete(id);
-    if (type === "result") request.resolve(text);
-    if (type === "error") request.reject(new Error(error));
-  });
-  speechWorker.addEventListener("error", (event) => {
-    console.error("Offline speech worker failed.", event.message);
-    for (const request of speechRequests.values()) request.reject(new Error("Offline speech recognition stopped unexpectedly."));
-    speechRequests.clear();
-    speechWorker?.terminate();
-    speechWorker = null;
-  });
-  return speechWorker;
-}
-
-function resampleAudio(samples, sourceSampleRate, targetSampleRate) {
-  const targetLength = Math.floor(samples.length * targetSampleRate / sourceSampleRate);
-  if (sourceSampleRate === targetSampleRate) return samples;
-  const output = new Float32Array(targetLength);
-  const ratio = sourceSampleRate / targetSampleRate;
-  for (let index = 0; index < targetLength; index += 1) {
-    const position = index * ratio;
-    const left = Math.floor(position);
-    const fraction = position - left;
-    const right = Math.min(left + 1, samples.length - 1);
-    output[index] = samples[left] * (1 - fraction) + samples[right] * fraction;
-  }
-  return output;
-}
-
-async function transcribeRecording(recording) {
-  const sampleCount = recording.chunks.reduce((total, chunk) => total + chunk.length, 0);
-  if (!sampleCount) return "";
-  const samples = new Float32Array(sampleCount);
-  let offset = 0;
-  for (const chunk of recording.chunks) {
-    samples.set(chunk, offset);
-    offset += chunk.length;
-  }
-  recording.chunks.length = 0;
-  const audio = resampleAudio(samples, recording.sampleRate, 16000);
-  let energy = 0;
-  for (const sample of audio) energy += sample * sample;
-  if (!audio.length || Math.sqrt(energy / audio.length) < 0.003) return "";
-  const id = ++speechRequestId;
-  const result = new Promise((resolve, reject) => speechRequests.set(id, { resolve, reject }));
-  getSpeechWorker().postMessage({ id, audio, language: languagePicker.value }, [audio.buffer]);
-  return result;
-}
-
-function setVoiceButtonState({ recording = false, processing = false } = {}) {
-  const busy = recording || processing;
-  voiceButton.classList.toggle("listening", recording);
-  voiceButton.disabled = processing;
-  voiceButton.setAttribute("aria-label", t(recording ? "stopVoiceCapture" : "captureVoice"));
-  voiceButton.querySelector("span:nth-child(2)").textContent = recording
-    ? t("stopAndTranscribe")
-    : processing ? (uiLanguage === "ar" ? "جارٍ التحويل…" : "Transcribing…") : t("speakThought");
-  document.querySelector("#new-note").disabled = busy;
-  document.querySelector("#interface-language").disabled = busy;
-  languagePicker.disabled = busy;
-  document.querySelector("#add-space").disabled = busy;
-  document.querySelector("#mobile-add-space").disabled = busy;
-  spaceList.querySelectorAll("button").forEach((button) => { button.disabled = busy; });
-}
-
-async function finishRecording(recording) {
-  if (activeRecording !== recording) return;
-  activeRecording = null;
-  recording.processor.onaudioprocess = null;
-  recording.source.disconnect();
-  recording.processor.disconnect();
-  recording.silence.disconnect();
-  for (const track of recording.stream.getTracks()) track.stop();
-  await recording.audioContext.close();
-  setVoiceButtonState({ processing: true });
-
-  showToast(t("transcribing"), 0);
-  try {
-    const transcript = (await transcribeRecording(recording)).trim();
-    const textarea = board.querySelector(`[data-note-id="${recording.note.id}"] .note-text`);
-    if (!textarea) return;
-    if (!transcript) {
-      showToast(t("noWords"));
-      return;
-    }
-    recording.note.text = transcript;
-    textarea.value = transcript;
-    updateCharacterCount(textarea.closest(".note-card"), transcript);
-    saveState();
-    showToast(t("transcribed"));
-  } catch (error) {
-    console.error("Offline transcription failed.", error);
-    const message = error instanceof Error ? error.message : t("unknownError");
-    showToast(t("transcribeError", { message }));
-  } finally {
-    setVoiceButtonState();
-  }
-}
-
-async function startVoiceCapture() {
-  if (activeRecording) {
-    finishRecording(activeRecording);
-    return;
-  }
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia || !AudioContextClass) {
-    showToast(t("microphoneUnsupported"));
-    return;
-  }
-  let stream;
-  let audioContext;
-  try {
-    audioContext = new AudioContextClass();
-    await audioContext.resume();
-    stream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 }, video: false });
-  } catch (error) {
-    for (const track of stream?.getTracks() ?? []) track.stop();
-    await audioContext?.close();
-    const messages = {
-      NotAllowedError: t("microphoneDenied"),
-      NotFoundError: t("microphoneMissing"),
-      NotReadableError: t("microphoneBusy"),
-    };
-    showToast(messages[error.name] || t("openMicrophone", { message: error.message }));
-    return;
-  }
-
-  const source = audioContext.createMediaStreamSource(stream);
-  const processor = audioContext.createScriptProcessor(4096, 1, 1);
-  const silence = audioContext.createGain();
-  silence.gain.value = 0;
-  const chunks = [];
-  const recording = {
-    note: null,
-    stream,
-    audioContext,
-    sampleRate: audioContext.sampleRate,
-    source,
-    processor,
-    silence,
-    chunks,
-  };
-  processor.onaudioprocess = (event) => {
-    chunks.push(new Float32Array(event.inputBuffer.getChannelData(0)));
-  };
-  source.connect(processor);
-  processor.connect(silence);
-  silence.connect(audioContext.destination);
-  const { note } = addNote("", true);
-  recording.note = note;
-  activeRecording = recording;
-  setVoiceButtonState({ recording: true });
-  showToast(t("listening"));
+  const canvas = board.querySelector(".mind-map-canvas");
+  if (canvas) drawMindMapLinks(canvas.querySelector(".mind-map-stage"), activeSpace().notes);
 }
 
 spaceList.addEventListener("click", (event) => {
@@ -610,16 +663,43 @@ spaceList.addEventListener("click", (event) => {
   render();
 });
 
-document.querySelector("#new-note").addEventListener("click", () => addNote());
-voiceButton.addEventListener("click", startVoiceCapture);
+document.querySelector("#map-add-branch").addEventListener("click", () => {
+  const root = activeSpace().notes.find((note) => note.parentId == null);
+  if (root) addMapIdea(activeSpace(), root.id);
+});
+mapToolbar.addEventListener("click", (event) => {
+  const action = event.target.closest("[data-map-action]")?.dataset.mapAction;
+  const canvas = board.querySelector(".mind-map-canvas");
+  if (!canvas) return;
+  if (action === "zoom-out") applyMindMapZoom(canvas, mindMapZoom - 0.1);
+  if (action === "zoom-in") applyMindMapZoom(canvas, mindMapZoom + 0.1);
+  if (action === "fit") fitMindMap();
+});
+document.querySelector("#new-note").addEventListener("click", () => {
+  const space = activeSpace();
+  if (space.type !== "mindmap") {
+    addNote();
+    return;
+  }
+  const root = space.notes.find((note) => note.parentId == null);
+  if (root) addMapIdea(space, root.id);
+});
 searchInput.addEventListener("input", () => applySearch(searchInput.value.trim().toLocaleLowerCase()));
 document.querySelector("#add-space").addEventListener("click", () => {
   document.querySelector("#space-name").value = "";
+  document.querySelector("#space-type").value = "notes";
+  spaceDialog.showModal();
+  document.querySelector("#space-name").focus();
+});
+document.querySelector("#add-map-space").addEventListener("click", () => {
+  document.querySelector("#space-name").value = "";
+  document.querySelector("#space-type").value = "mindmap";
   spaceDialog.showModal();
   document.querySelector("#space-name").focus();
 });
 document.querySelector("#mobile-add-space").addEventListener("click", () => {
   document.querySelector("#space-name").value = "";
+  document.querySelector("#space-type").value = "notes";
   spaceDialog.showModal();
   document.querySelector("#space-name").focus();
 });
@@ -629,7 +709,21 @@ spaceForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const name = document.querySelector("#space-name").value.trim();
   if (!name) return;
-  const space = { id: crypto.randomUUID(), name, notes: [] };
+  const type = document.querySelector("#space-type").value;
+  const space = {
+    id: crypto.randomUUID(),
+    name,
+    ...(type === "mindmap" ? {
+      type,
+      notes: [{
+        id: crypto.randomUUID(),
+        text: name,
+        parentId: null,
+        tone: 1,
+        createdAt: Date.now(),
+      }],
+    } : { notes: [] }),
+  };
   state.spaces.push(space);
   state.activeSpaceId = space.id;
   searchInput.value = "";
@@ -643,17 +737,22 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "/" && !isTyping) {
     event.preventDefault();
     searchInput.focus();
-  } else if (event.key === "Escape" && activeRecording) {
-    finishRecording(activeRecording);
   }
 });
 
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(positionCards, 100);
+  resizeTimer = setTimeout(() => {
+    if (activeSpace().type === "mindmap") {
+      const canvas = board.querySelector(".mind-map-canvas");
+      if (canvas) layoutMindMap(canvas, activeSpace().notes);
+    } else {
+      positionCards();
+    }
+  }, 100);
 });
 
-if ("serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
+if (import.meta.env.PROD && "serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./sw.js").catch((error) => {
       console.error("Could not register the offline app worker.", error);
@@ -661,6 +760,5 @@ if ("serviceWorker" in navigator && window.location.protocol.startsWith("http"))
   });
 }
 
-initLanguagePicker();
 initInterfaceLanguage();
 render();

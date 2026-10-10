@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f4f2ed">
-    <meta name="description" content="Elsewhere Notes is a private, offline-first note-taking app with spatial notes, on-device multilingual voice transcription, and text-to-speech.">
+    <meta name="description" content="Elsewhere Notes is a simple, offline-first space for capturing and organizing thoughts.">
     <meta name="application-name" content="Elsewhere Notes">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Elsewhere Notes">
-    <meta property="og:title" content="Elsewhere Notes — Private Voice Notes, Offline">
-    <meta property="og:description" content="A private thought space for spatial notes, offline voice transcription, and read-aloud notes. Your notes stay on your device.">
+    <meta property="og:title" content="Elsewhere Notes — A Space for Thoughts">
+    <meta property="og:description" content="A simple thought space for writing, organizing, and connecting notes.">
     <meta property="og:url" content="https://voorg-svg.github.io/elsewhere/">
     <meta name="twitter:card" content="summary">
     <link rel="canonical" href="https://voorg-svg.github.io/elsewhere/">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./styles.css">
-    <title>Elsewhere Notes — Private Offline Voice Notes</title>
+    <title>Elsewhere Notes — A Space for Thoughts</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -25,7 +25,7 @@
         "applicationCategory": "ProductivityApplication",
         "operatingSystem": "Web",
         "url": "https://voorg-svg.github.io/elsewhere/",
-        "description": "A private, offline-first note-taking app with spatial notes, on-device multilingual voice transcription, and text-to-speech."
+        "description": "A simple, offline-first space for capturing and organizing thoughts."
       }
     </script>
   </head>
@@ -41,6 +41,9 @@
         <button class="mobile-add-space" id="mobile-add-space" type="button" aria-label="Create a new space" data-i18n-aria-label="createSpace">＋</button>
         <button class="add-space-button" id="add-space" type="button">
           <span aria-hidden="true">＋</span> <span data-i18n="newSpace">New space</span>
+        </button>
+        <button class="add-space-button add-map-space-button" id="add-map-space" type="button">
+          <span aria-hidden="true">⌘</span> <span data-i18n="newIdeaMap">New idea map</span>
         </button>
         <div class="sidebar-foot">
           <span class="privacy-mark" aria-hidden="true">◉</span>
@@ -83,14 +86,25 @@
                   <option value="ar">العربية</option>
                 </select>
               </label>
-              <label class="language-picker">
-                <span data-i18n="voiceLanguage">VOICE LANGUAGE</span>
-                <select id="transcription-language" aria-label="Voice note language"></select>
-              </label>
-              <button id="voice-capture" class="voice-button" type="button" aria-label="Capture a voice note">
-                <span class="voice-icon" aria-hidden="true">◖</span>
-                <span data-i18n="speakThought">Speak a thought</span>
-                <span class="voice-shortcut">⌘ /</span>
+            </div>
+          </div>
+
+          <div id="map-toolbar" class="map-toolbar" hidden>
+            <div class="map-toolbar-copy">
+              <span class="map-toolbar-mark" aria-hidden="true">⌘</span>
+              <span data-i18n="mapToolbarHint">Build out your thinking, one connected idea at a time.</span>
+            </div>
+            <div class="map-toolbar-actions">
+              <button id="map-add-branch" class="button button-map-add" type="button">
+                <span aria-hidden="true">＋</span> <span data-i18n="addIdea">Add idea</span>
+              </button>
+              <span class="map-toolbar-divider" aria-hidden="true"></span>
+              <button class="map-control" type="button" data-map-action="zoom-out" aria-label="Zoom out" title="Zoom out">−</button>
+              <span id="map-zoom-level" class="map-zoom-level">100%</span>
+              <button class="map-control" type="button" data-map-action="zoom-in" aria-label="Zoom in" title="Zoom in">＋</button>
+              <button class="map-control map-fit-control" type="button" data-map-action="fit" aria-label="Fit map to view" title="Fit map to view">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 3H3v4M13 3h4v4M17 13v4h-4M7 17H3v-4M3 7l5-4m4 0 5 4m0 6-5 4m-4 0-5-4"/></svg>
+                <span data-i18n="fitMap">Fit</span>
               </button>
             </div>
           </div>
@@ -118,6 +132,11 @@
         <h2><span data-i18n="newSpace">A new space</span><span class="title-period">.</span></h2>
         <label for="space-name" data-i18n="nameSpace">What will you call it?</label>
         <input id="space-name" name="space-name" maxlength="48" placeholder="e.g. The garden, big ideas…" data-i18n-placeholder="spacePlaceholder" required dir="auto">
+        <label for="space-type" data-i18n="spaceType">SPACE TYPE</label>
+        <select id="space-type" name="space-type">
+          <option value="notes" data-i18n="notesSpace">Notes space</option>
+          <option value="mindmap" data-i18n="ideaMap">Idea map</option>
+        </select>
         <div class="modal-actions">
           <button class="button button-quiet" value="cancel" type="submit" data-i18n="cancel">Cancel</button>
           <button class="button button-dark" id="create-space" value="create" type="submit"><span data-i18n="createSpace">Create space</span> <span aria-hidden="true">↗</span></button>
